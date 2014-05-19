@@ -22,7 +22,7 @@ tpl = {
                     callback();
                 }
             });
-        }
+        };
  
         loadTemplate(0);
     },
