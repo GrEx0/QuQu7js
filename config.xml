@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns   = "http://www.w3.org/ns/widgets"
+    xmlns:gap   = "http://phonegap.com/ns/1.0"
+    id          = "com.PNC.QuQu7"
+    versionCode = "10" 
+    version     = "1.0.0" >
+
+    <!-- versionCode is optional and Android only -->
+
+    <name>QuQu7 - Don't waste your time</name>
+
+    <description>
+      An application to optimize the time during queques. 
+    </description>
+
+    <author href="QuQu7" email="QuQu7@gmail.com">
+      QuQu7 Team:
+      Pietro Ilacqua
+      Claudio Micheli
+    </author>
+
+    <!-- We'll include the Barcode plugin as an example -->
+    <gap:plugin name="com.phonegap.plugins.barcodescanner" />
+    
+    <!-- Includo le schermate splash  -->
+    <gap:splash src="res/screen/ios/screen-iphone-portrait.png"         gap:platform="ios"     width="320" height="480" />
+    <gap:splash src="res/screen/ios/screen-iphone-portrait-2x.png"      gap:platform="ios"     width="640" height="960" />
+    <gap:splash src="res/screen/ios/screen-iphone-portrait-568h-2x.png" gap:platform="ios"     width="640" height="1136" />
+    <gap:splash src="res/screen/ios/screen-ipad-portrait.png"           gap:platform="ios"     width="768" height="1024" />
+    <gap:splash src="res/screen/ios/screen-ipad-landscape.png"          gap:platform="ios"     width="1024" height="768" />
+</widget>
