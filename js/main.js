@@ -9,39 +9,31 @@ Backbone.View.prototype.close = function () {
 
 var AppRouter = Backbone.Router.extend({
  
-    initialize: function () {
+/*    initialize: function () {
         $('.content').html(new StartView().render());
-    },
-/*
+    },*/
+
     routes: {
-        "": "list",
-        "wines/new": "newWine",
-        "wines/:id": "wineDetails"
+        "": "StartApp",
+        "AcquireQR/": "AcquireQR",
+        "Check/": "CheckDetails"
     },
  
-    list: function () {
-        this.before(function () {
-            this.showView('#content', new StartView());
-        });
+    StartApp: function () {
+        
+            this.showView('.content', new Start_View());
     },
  
-    wineDetails: function (id) {
-        this.before(function () {
-            var wine = this.wineList.get(id);
-            this.showView('#content', new WineView({
-                model: wine
-            }));
-        });
+    AcquireQR: function () {
+          	this.showView('.content', new AcquireQR_View());  
     },
  
-    newWine: function () {
-        this.before(function () {
-            this.showView('#content', new WineView({
-                model: new Wine()
-            }));
-        });
+    CheckDetails: function () {
+        
+        this.showView('.content', new Check_View());  
+            
     },
- */
+ 
     showView: function (selector, view) {
         if (this.currentView) this.currentView.close();
  
@@ -51,7 +43,7 @@ var AppRouter = Backbone.Router.extend({
         return view;
     },
  
-    before: function (callback) {
+ /*   before: function (callback) {
         if (this.wineList) {
             if (callback) callback.call(this);
         } else {
@@ -67,7 +59,7 @@ var AppRouter = Backbone.Router.extend({
                 }
             });
         }
-    }
+    }*/
  
 });
  
