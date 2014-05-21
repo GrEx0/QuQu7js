@@ -9,9 +9,9 @@ Backbone.View.prototype.close = function () {
 
 var AppRouter = Backbone.Router.extend({
  
-/*    initialize: function () {
-        $('.content').html(new StartView().render());
-    },*/
+    initialize: function () {
+        $('header').html(new Header_View().render());
+    },
 
     routes: {
         "": "StartApp",
@@ -22,15 +22,18 @@ var AppRouter = Backbone.Router.extend({
     StartApp: function () {
         
             this.showView('.content', new Start_View());
+            $('#backBtn').css({"visibility":"hidden"});
     },
  
     AcquireQR: function () {
-          	this.showView('.content', new AcquireQR_View());  
+          	this.showView('.content', new AcquireQR_View());
+          	$('#backBtn').css({"visibility":"visible"});  
     },
  
     CheckDetails: function () {
         
-        this.showView('.content', new Check_View());  
+        this.showView('.content', new Check_View());
+        $('#backBtn').css({"visibility":"visible"});    
             
     },
  
@@ -62,8 +65,10 @@ var AppRouter = Backbone.Router.extend({
     }*/
  
 });
- 
-tpl.loadTemplates(['Start', 'AcquireQR', 'Check'], function () {
+
+/* --- Start main --- */
+
+tpl.loadTemplates(['Start', 'AcquireQR', 'Check','Header'], function () {
    app = new AppRouter();
    Backbone.history.start();
 });

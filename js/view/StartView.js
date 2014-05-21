@@ -7,4 +7,5 @@ Start_View = Backbone.View.extend({
             this.$el.html( this.template() );
             return this.el;
         }
+        
     });
