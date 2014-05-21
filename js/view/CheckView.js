@@ -9,5 +9,23 @@ Check_View = Backbone.View.extend({
         }
     });
 
-ticket = new Ticket;
-ticket.Centro = "cazzo";
+var ticket = new Ticket();
+
+ticket.Centro = "yo";
+ticket.Numero = "yo";
+ticket.Operazione = "yo";
+ticket.Stima = "bro";
+
+
+document.getElementById("center").innerHTML = ticket.Centro;
+
+document.getElementById("ticketNumber").innerHTML = ticket.Numero;
+
+document.getElementById("operation").innerHTML = ticket.Operazione;
+
+document.getElementById("waitingTime").innerHTML = ticket.Stima;
+
+
+
+       
+
