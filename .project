@@ -1,26 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-<<<<<<< HEAD
 	<name>ququ7</name>
-=======
-	<name>QuQu7js</name>
->>>>>>> 68c992ea62040c83945ea1333111ce4a43583dcf
 	<comment></comment>
 	<projects>
 	</projects>
 	<buildSpec>
-<<<<<<< HEAD
 	</buildSpec>
 	<natures>
-=======
-		<buildCommand>
-			<name>com.aptana.ide.core.unifiedBuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-	</buildSpec>
-	<natures>
-		<nature>com.aptana.projects.webnature</nature>
->>>>>>> 68c992ea62040c83945ea1333111ce4a43583dcf
 	</natures>
 </projectDescription>
