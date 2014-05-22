@@ -17,14 +17,13 @@ ticket.Operazione = "yo";
 ticket.Stima = "bro";
 
 
-document.getElementById("center").innerHTML = ticket.Centro;
+$("#center").html(ticket.Centro);
 
-document.getElementById("ticketNumber").innerHTML = ticket.Numero;
+$("#ticketNumber").html(ticket.Numero);
 
-document.getElementById("operation").innerHTML = ticket.Operazione;
+$("#operation").html(ticket.Operazione);
 
-document.getElementById("waitingTime").innerHTML = ticket.Stima;
-
+$("#waitingTime").html(ticket.Stima);
 
 
        
