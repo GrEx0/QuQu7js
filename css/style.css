@@ -23,3 +23,6 @@ body {
 	visibility:hidden;
 }
 
+.content {
+	background:url(../img/logo.png) no-repeat center top;
+}
