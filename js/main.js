@@ -31,8 +31,16 @@ var AppRouter = Backbone.Router.extend({
     },
  
     CheckDetails: function () {
-        
-        this.showView('.content', new Check_View());
+        ticket = new Ticket({
+    		id:"1",
+    		data:"05 maggio",
+    		center:"Milano -ATM",
+    		ticketNumber:"04",
+    		operation:"N",
+    		walkingTime:"4min"
+    	});
+    	console.log(ticket.get("center"));
+        this.showView('.content', new Check_View({model:ticket}));
         $('#backBtn').css({"visibility":"visible"});    
             
     },
