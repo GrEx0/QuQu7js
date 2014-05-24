@@ -1,10 +1,11 @@
 Ticket = Backbone.Model.extend({
     defaults: {
         "id":null,
-        "Data":"",
-        "Centro":"",
-        "Numero":"",
-        "Operazione":"",
-        "Stima":""
+        "data":"",
+        "center":"",
+        "ticketNumber":"",
+        "operation":"",
+        "waitingTime":"",
+        "walkingTime":""
     }
 });
