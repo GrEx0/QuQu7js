@@ -13,16 +13,23 @@ AcquireQR_View = Backbone.View.extend({
  
  		doScan: function() 
  		{
-        	console.log('scanning');
+    
+    /* ------ PARTE DI ACQUISIZIONE QR-CODE, DISABILITATA IN DEBUG E TESTING DA PC  ----- */
+    /* 
+         	console.log('scanning');
         	var scanner = cordova.require("cordova/plugin/BarcodeScanner");
 			scanner.scan( function (result) 
         		{ 
-					alert("We got a barcode\n" + "Result: " + result.text + "\n" + "Format: " + result.format + "\n" + 
-            				"Cancelled: " + result.cancelled);  
-            		console.log("Scanner result: \n" +"text: " + result.text + "\n" +"format: " + result.format + "\n" +
-                		"cancelled: " + result.cancelled + "\n");
+					alert("We got a barcode\n" + "Result: " + result.text );  
+            		console.log("Scanner result: \n" +"text: " + result.text);
             		document.getElementById("results").innerHTML = result.text;
             		console.log(result);
         		});
+        	
+     */
+     /* ------  FINE FUNZIONE X ACQUISIZIONE QR-CODE               ----- */
+       console.log('Bottone schiacciato');
+       $("#results").val("http://localhost/QuQu7js/ServerSide/index.php?id=1");
+       this.model.set({link: $("#results").val()});
          }
     });

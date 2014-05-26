@@ -26,7 +26,7 @@ var AppRouter = Backbone.Router.extend({
     },
  
     AcquireQR: function () {
-          	this.showView('.content', new AcquireQR_View());
+          	this.showView('.content', new AcquireQR_View({model: new link()}));
           	$('#backBtn').css({"visibility":"visible"});  
     },
  
