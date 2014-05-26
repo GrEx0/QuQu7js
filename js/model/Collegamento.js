@@ -11,9 +11,9 @@ var link = Backbone.Model.extend({
       	$.get( this.get('link'), function( data ) 
       	{
   				$("#answer" ).html( data );
-  				alert( "Load was performed." );
+  				
 		});
-      }
+      } 
         
     }
   
