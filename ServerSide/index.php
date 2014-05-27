@@ -35,7 +35,7 @@
 						if ($result->num_rows>0) {die("Utente gia attivo <br>");}
 						
 							// Inserisco il record trovato nella tabella dinamica UtentiAttivi
-						$query = "INSERT INTO UtentiAttivi VALUES ('','".$_GET['DeviceToken']."','".$_GET['id']."')";
+						$query = "INSERT INTO UtentiAttivi (DeviceToken,Id_Ticket_ext) VALUES ('".$_GET['DeviceToken']."','".$_GET['id']."')";
 						echo nl2br($query."\n");
 						
 						$result = $mysqli->query($query);

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mag 26, 2014 alle 10:59
+-- Generation Time: Mag 27, 2014 alle 21:28
 -- Versione del server: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -149,9 +149,24 @@ CREATE TABLE IF NOT EXISTS `sportelli` (
 INSERT INTO `sportelli` (`Id`, `NumeroSportello`, `Id_Centro_ext`, `Id_operazione_ext`) VALUES
 (1, 1, 8, 1),
 (2, 2, 8, 1),
-(3, 3, 8, 2),
+(3, 3, 8, 1),
 (4, 4, 8, 2),
 (5, 5, 8, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `stats`
+--
+
+CREATE TABLE IF NOT EXISTS `stats` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `WaitingTime` varchar(50) DEFAULT '0',
+  `ServingTime` varchar(50) DEFAULT '0',
+  `Id_operazione_ext` int(11) DEFAULT '0',
+  PRIMARY KEY (`Id`),
+  KEY `FK_Stats_operazioni` (`Id_operazione_ext`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -161,48 +176,34 @@ INSERT INTO `sportelli` (`Id`, `NumeroSportello`, `Id_Centro_ext`, `Id_operazion
 
 CREATE TABLE IF NOT EXISTS `ticket` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `OraEmissione` varchar(50) DEFAULT '0',
-  `OraChiamata` varchar(50) DEFAULT '0',
-  `OraFine` varchar(50) DEFAULT '0',
+  `OraEmissione` time NOT NULL DEFAULT '00:00:00',
+  `OraChiamata` time DEFAULT '00:00:00',
+  `OraFine` time DEFAULT '00:00:00',
   `Data` varchar(50) DEFAULT '0',
-  `Id_Centro_ext` int(11) DEFAULT '0',
+  `Numero` int(11) DEFAULT '0',
+  `Id_centro_ext` int(11) DEFAULT '0',
+  `Id_operazione_ext` int(11) DEFAULT '0',
   PRIMARY KEY (`Id`),
-  KEY `FK__centri` (`Id_Centro_ext`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+  KEY `FK_ticketn_operazioni` (`Id_operazione_ext`),
+  KEY `FK_ticketn_centri` (`Id_centro_ext`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dump dei dati per la tabella `ticket`
 --
 
-INSERT INTO `ticket` (`Id`, `OraEmissione`, `OraChiamata`, `OraFine`, `Data`, `Id_Centro_ext`) VALUES
-(1, '10:30:00', '10:50:00', '10:58:45', '14/05/14', 8),
-(2, '10:32:00', '10:40:00', '10:45:00', '14/05/14', 8),
-(3, '10:15:00', '10:31:00', '10:40:00', '14/05/14', 8);
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `ticketoperazioni`
---
-
-CREATE TABLE IF NOT EXISTS `ticketoperazioni` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Numero` int(11) NOT NULL DEFAULT '0',
-  `Id_Operazione_ext` int(11) DEFAULT NULL,
-  `Id_Ticket_ext` int(11) DEFAULT NULL,
-  PRIMARY KEY (`Id`),
-  KEY `Id_Ticket_ext` (`Id_Ticket_ext`),
-  KEY `FK_ticketoperazioni_operazioni` (`Id_Operazione_ext`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
-
---
--- Dump dei dati per la tabella `ticketoperazioni`
---
-
-INSERT INTO `ticketoperazioni` (`Id`, `Numero`, `Id_Operazione_ext`, `Id_Ticket_ext`) VALUES
-(1, 1, 1, 3),
-(2, 2, 1, 3),
-(3, 1, 2, 1);
+INSERT INTO `ticket` (`Id`, `OraEmissione`, `OraChiamata`, `OraFine`, `Data`, `Numero`, `Id_centro_ext`, `Id_operazione_ext`) VALUES
+(1, '10:12:10', '10:18:20', '10:40:21', '28/05/14', 1, 8, 1),
+(2, '10:23:10', '10:24:20', '10:45:21', '28/05/14', 2, 8, 1),
+(3, '10:23:30', '10:25:30', '10:50:21', '28/05/14', 3, 8, 1),
+(4, '10:24:00', '10:40:30', '10:59:30', '28/05/14', 4, 8, 1),
+(5, '10:24:30', '10:45:58', '11:08:30', '28/05/14', 5, 8, 1),
+(6, '10:24:55', '10:51:30', '11:15:30', '28/05/14', 6, 8, 1),
+(7, '10:36:55', '11:00:30', '11:15:30', '28/05/14', 7, 8, 1),
+(8, '10:24:00', '10:40:30', '10:59:30', '28/05/14', 4, 8, 2),
+(9, '10:23:10', '10:24:20', '10:45:21', '28/05/14', 2, 8, 2),
+(10, '10:24:30', '10:45:58', '11:08:30', '28/05/14', 5, 8, 2),
+(12, '10:37:30', '00:00:00', '00:00:00', '28/05/14', 8, 8, 1);
 
 -- --------------------------------------------------------
 
@@ -213,18 +214,18 @@ INSERT INTO `ticketoperazioni` (`Id`, `Numero`, `Id_Operazione_ext`, `Id_Ticket_
 CREATE TABLE IF NOT EXISTS `utentiattivi` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `DeviceToken` varchar(50) DEFAULT '0',
-  `Posizione` varchar(50) DEFAULT '0,0',
+  `WaitingTime` varchar(50) DEFAULT NULL,
   `Id_Ticket_ext` int(11) DEFAULT NULL,
   PRIMARY KEY (`Id`),
-  KEY `FK__ticket` (`Id_Ticket_ext`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  KEY `FK_utentiattivi_ticket` (`Id_Ticket_ext`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Dump dei dati per la tabella `utentiattivi`
 --
 
-INSERT INTO `utentiattivi` (`Id`, `DeviceToken`, `Posizione`, `Id_Ticket_ext`) VALUES
-(1, '1233 456675 65343 4564 3', '0,0', 1);
+INSERT INTO `utentiattivi` (`Id`, `DeviceToken`, `WaitingTime`, `Id_Ticket_ext`) VALUES
+(13, '934939449', NULL, 12);
 
 --
 -- Limiti per le tabelle scaricate
@@ -256,23 +257,23 @@ ALTER TABLE `sportelli`
   ADD CONSTRAINT `sportelli_ibfk_2` FOREIGN KEY (`Id_operazione_ext`) REFERENCES `operazioni` (`Id`);
 
 --
+-- Limiti per la tabella `stats`
+--
+ALTER TABLE `stats`
+  ADD CONSTRAINT `FK_Stats_operazioni` FOREIGN KEY (`Id_operazione_ext`) REFERENCES `operazioni` (`Id`);
+
+--
 -- Limiti per la tabella `ticket`
 --
 ALTER TABLE `ticket`
-  ADD CONSTRAINT `FK__centri` FOREIGN KEY (`Id_Centro_ext`) REFERENCES `centri` (`Id`);
-
---
--- Limiti per la tabella `ticketoperazioni`
---
-ALTER TABLE `ticketoperazioni`
-  ADD CONSTRAINT `FK_ticketoperazioni_operazioni` FOREIGN KEY (`Id_Operazione_ext`) REFERENCES `operazioni` (`Id`),
-  ADD CONSTRAINT `ticketoperazioni_ibfk_1` FOREIGN KEY (`Id_Ticket_ext`) REFERENCES `ticket` (`Id`);
+  ADD CONSTRAINT `FK_ticketn_centri` FOREIGN KEY (`Id_centro_ext`) REFERENCES `centri` (`Id`),
+  ADD CONSTRAINT `FK_ticketn_operazioni` FOREIGN KEY (`Id_operazione_ext`) REFERENCES `operazioni` (`Id`);
 
 --
 -- Limiti per la tabella `utentiattivi`
 --
 ALTER TABLE `utentiattivi`
-  ADD CONSTRAINT `FK__ticket` FOREIGN KEY (`Id_Ticket_ext`) REFERENCES `ticket` (`Id`);
+  ADD CONSTRAINT `FK_utentiattivi_ticket` FOREIGN KEY (`Id_Ticket_ext`) REFERENCES `ticket` (`Id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
