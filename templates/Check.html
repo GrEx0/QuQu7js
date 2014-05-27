@@ -1,25 +1,19 @@
-<h5 class="content-padded">Check</h5>
+<h5 class="content-padded hidden">Check</h5>
 	<ul class="table-view">
- 			 	<li class="table-view-cell">
-    					centro: <%=center%>
-  				</li>
+		<li class="table-view-divider">Centro: <%=center%>, <%=data%></li>
   
   				<li class="table-view-cell">
-    					numero biglietto:<%=ticketNumber%>
+    					<h3><b>Ticket: </b></h3><%=operation%><%=ticketNumber%>
   				</li>
-  				
-  				<li class="table-view-cell">
-    					operazione:<%=operation%>
-    			</li>
-    			
+
     			<li class="table-view-cell">
 
-    					stima attesa:<%=waitingTime%>
-
+    					<h3><b>Sarai servito in: </b></h3><%=waitingTime%>
   				</li>
   				
   				<li class="table-view-cell">
-    					stima percorso:<%=walkingTime%>
+    					<h3><b>Distanza dal centro: </b></h3><%=walkingTime%> 
+    					<h3><b>loca</b></h3><%=Check_View.location%>
     			</li>
 	</ul>
 		

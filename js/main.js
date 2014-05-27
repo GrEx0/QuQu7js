@@ -11,6 +11,7 @@ var AppRouter = Backbone.Router.extend({
  
     initialize: function () {
         $('header').html(new Header_View().render());
+        window.ticket = new Ticket();
     },
 
     routes: {
@@ -26,21 +27,13 @@ var AppRouter = Backbone.Router.extend({
     },
  
     AcquireQR: function () {
-          	this.showView('.content', new AcquireQR_View());
+          	this.showView('.content', new AcquireQR_View({model: new link()}));
           	$('#backBtn').css({"visibility":"visible"});  
     },
  
     CheckDetails: function () {
-        ticket = new Ticket({
-    		id:"1",
-    		data:"05 maggio",
-    		center:"Milano -ATM",
-    		ticketNumber:"04",
-    		operation:"N",
-    		walkingTime:"4min"
-    	});
     	console.log(ticket.get("center"));
-        this.showView('.content', new Check_View({model:ticket}));
+        this.showView('.content', new Check_View({model:window.ticket}));
         $('#backBtn').css({"visibility":"visible"});    
             
     },
