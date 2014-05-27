@@ -29,7 +29,7 @@ AcquireQR_View = Backbone.View.extend({
      */
      /* ------  FINE FUNZIONE X ACQUISIZIONE QR-CODE               ----- */
        console.log('Bottone schiacciato');
-       $("#results").val("http://localhost/QuQu7js/ServerSide/index.php?id=1");
+       $("#results").val("http://localhost/QuQu7js/ServerSide/index.php?id=12&DeviceToken=934939449");
        this.model.set({link: $("#results").val()});
          }
     });
