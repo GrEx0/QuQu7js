@@ -26,21 +26,22 @@
 						if ($result->num_rows >0) 
 						{
 							$record = $result->fetch_array(MYSQLI_ASSOC);
-							echo nl2br("Ticket Emesso, Utente attivato \n");
+							echo nl2br("Ticket Emesso \n");
 							echo nl2br("Ora emissione:".$record['OraEmissione']."\n");
+							echo nl2br(json_encode($record)."\n");
 						
 						$query = "SELECT * FROM UtentiAttivi WHERE id_ticket_ext=". $_GET["id"];
 						$result = $mysqli->query($query);
 						if ($result->num_rows>0) {die("Utente gia attivo <br>");}
 						
 							// Inserisco il record trovato nella tabella dinamica UtentiAttivi
-						$query = "INSERT INTO UtentiAttivi VALUES ('','".$_GET['DeviceToken']."','".$_GET['Posizione']."','".$_GET['id']."')";
+						$query = "INSERT INTO UtentiAttivi VALUES ('','".$_GET['DeviceToken']."','".$_GET['id']."')";
 						echo nl2br($query."\n");
 						
 						$result = $mysqli->query($query);
 						if ($result) 
 						{
-								echo nl2br("Insert avvenuta con successo \n");
+								echo nl2br("Insert avvenuta con successo,Utente Attivo \n");
 						} else echo("ERRORE INSERT");
 						} 
 						else { echo("Ticket non trovato");}
