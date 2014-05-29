@@ -5,6 +5,19 @@ Check_View = Backbone.View.extend({
              this.model.on("change", this.render);
             console.log("Check.html template caricato");
             
+            navigator.geolocation.getCurrentPosition(
+            
+            
+            estimateWalkingTime
+         
+             ,
+            
+             function() {
+                alert('Error getting location');
+            }
+            
+            );
+            
              
         },
         
@@ -14,9 +27,29 @@ Check_View = Backbone.View.extend({
             return this.el;
             
            
+        },
+       
+        estimateWalkingTime: function (position){
+        	
+        	
+        	google.maps.DistanceMatrixService.getDistanceMatrix (
+        		
+        		{
+        			//parametri :
+        			origins : google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+        			destinations : this.centro.coordinate ,
+        			travelmode : google.maps.TravelMode.WALKING,
+        			avoidHighways : false,
+        			avoidTolls : false
+        			
+        		},
+        		    
+        		    //callback :
+        		    walkingTime = response.rows[0].elements[0].distance.text
+        		
+        	);
         }
-        
-        
+  
     });
 
 
