@@ -21,7 +21,7 @@
 
     <!-- We'll include the Barcode plugin as an example -->
     <gap:plugin name="com.phonegap.plugins.barcodescanner" />
-    <gap:plugin name="com.adobe.plugins.pushplugin" />
+    <gap:plugin name="com.phonegap.plugins.pushplugin " />
     
     <!-- Includo le schermate splash  -->
     <gap:splash src="res/screen/ios/screen-iphone-portrait.png"         gap:platform="ios"     width="320" height="480" />
