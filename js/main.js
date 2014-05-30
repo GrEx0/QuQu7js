@@ -83,9 +83,9 @@ function onDeviceReady() {
                 	pushNotification = window.plugins.pushNotification;
                 	if (device.platform == 'android' || device.platform == 'Android') {
 						console.log("registro android");
+						alert("Device Android Registered");
                     	pushNotification.register(successHandler,errorHandler, {"senderID":"408316694165","ecb":"onNotificationGCM"});		// required!
 					} else {
-						$("#app-status-ul").append('<li>registering iOS</li>');
                     	pushNotification.register(tokenHandler, errorHandler, {"badge":"true","sound":"true","alert":"true","ecb":"onNotificationAPN"});	// required!
                 	}
                 }
@@ -125,13 +125,14 @@ function onNotificationAPN(e) {
 					{
 						// Your GCM push server needs to know the regID before it can push to this device
 						// here is where you might want to send it the regID for later use.
-						console.log("regID = " + e.regid);
+						alert("regID = "+e.regid);
 					}
                     break;
                     
                     case 'message':
                     	// if this flag is set, this notification happened while we were in the foreground.
                     	// you might want to play a sound to get the user's attention, throw up a dialog, etc.
+                    	alert('message = '+e.message+' msgcnt = '+e.msgcnt);
                     	if (e.foreground)
                     	{
 							console.log("INLINE NOTIFICATION");
@@ -153,10 +154,11 @@ function onNotificationAPN(e) {
                     
                     case 'error':
 						console.log('ERROR -> MSG:' + e.msg + '\n');
+						alert('GCM error = '+e.msg);
                     break;
                     
                     default:
-						console.loh('EVENT -> Unknown, an event was received and we do not know what it is');
+						 alert('An unknown GCM event has occurred');
                     break;
                 }
             }
