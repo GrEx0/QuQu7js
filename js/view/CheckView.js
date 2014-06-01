@@ -13,10 +13,11 @@ Check_View = Backbone.View.extend({
         render: function(){
             this.$el.html( this.template(this.model.toJSON()) );
             console.log("Rendering Check_view");
+			console.log(window.ticket.get('id_operazione_ext'));
             return this.el;
             
            
-        },
+        }
        
      /*   estimateWalkingTime: function(position){
         	google.maps.DistanceMatrixService.getDistanceMatrix (

@@ -5,15 +5,23 @@ var link = Backbone.Model.extend({
     },
  
     attributesChanged: function(){
-    	console.log("Link rilevato dal modello");
+    	console.log("Link rilevato dal modello:"+this.get('link'));
       if (this.get('link'))
-      {
-      	$.get( this.get('link'), function( data ) 
-      	{
-  				$("#answer" ).html( data );
-  				
-		});
-      } 
+		{
+			console.log("sono dentro if");
+			$.getJSON( this.get('link'),function( data ){
+					window.ticket.set({
+						'id':data.id,
+						'data':data.Data,
+						'center':data.Nome,
+						'id_centro_ext':data.id_centro_ext,
+						'ticketNumber':data.Numero,
+						'operation':data.CodiceLettera,
+						'id_operazione_ext':data.id_operazione
+					});
+				$("#answer").html(window.ticket.get('data')+": SUCCESS, Ticket "+window.ticket.get('operation')+window.ticket.get('ticketNumber')+" attivato");
+			});
+		}
         
     }
   
