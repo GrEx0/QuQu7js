@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mag 27, 2014 alle 21:28
+-- Generation Time: Giu 02, 2014 alle 13:23
 -- Versione del server: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -156,21 +156,6 @@ INSERT INTO `sportelli` (`Id`, `NumeroSportello`, `Id_Centro_ext`, `Id_operazion
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `stats`
---
-
-CREATE TABLE IF NOT EXISTS `stats` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `WaitingTime` varchar(50) DEFAULT '0',
-  `ServingTime` varchar(50) DEFAULT '0',
-  `Id_operazione_ext` int(11) DEFAULT '0',
-  PRIMARY KEY (`Id`),
-  KEY `FK_Stats_operazioni` (`Id_operazione_ext`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Struttura della tabella `ticket`
 --
 
@@ -186,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `ticket` (
   PRIMARY KEY (`Id`),
   KEY `FK_ticketn_operazioni` (`Id_operazione_ext`),
   KEY `FK_ticketn_centri` (`Id_centro_ext`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Dump dei dati per la tabella `ticket`
@@ -203,7 +188,9 @@ INSERT INTO `ticket` (`Id`, `OraEmissione`, `OraChiamata`, `OraFine`, `Data`, `N
 (8, '10:24:00', '10:40:30', '10:59:30', '28/05/14', 4, 8, 2),
 (9, '10:23:10', '10:24:20', '10:45:21', '28/05/14', 2, 8, 2),
 (10, '10:24:30', '10:45:58', '11:08:30', '28/05/14', 5, 8, 2),
-(12, '10:37:30', '00:00:00', '00:00:00', '28/05/14', 8, 8, 1);
+(12, '10:37:30', '00:00:00', '00:00:00', '28/05/14', 8, 8, 1),
+(13, '10:40:00', '00:00:00', '00:00:00', '28/05/14', 9, 8, 1),
+(15, '10:41:00', '00:00:00', '00:00:00', '28/05/14', 10, 8, 1);
 
 -- --------------------------------------------------------
 
@@ -213,19 +200,12 @@ INSERT INTO `ticket` (`Id`, `OraEmissione`, `OraChiamata`, `OraFine`, `Data`, `N
 
 CREATE TABLE IF NOT EXISTS `utentiattivi` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `DeviceToken` varchar(50) DEFAULT '0',
+  `regid` varchar(50) DEFAULT '0',
   `WaitingTime` varchar(50) DEFAULT NULL,
   `Id_Ticket_ext` int(11) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   KEY `FK_utentiattivi_ticket` (`Id_Ticket_ext`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
-
---
--- Dump dei dati per la tabella `utentiattivi`
---
-
-INSERT INTO `utentiattivi` (`Id`, `DeviceToken`, `WaitingTime`, `Id_Ticket_ext`) VALUES
-(13, '934939449', NULL, 12);
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=88 ;
 
 --
 -- Limiti per le tabelle scaricate
@@ -255,12 +235,6 @@ ALTER TABLE `provincie`
 ALTER TABLE `sportelli`
   ADD CONSTRAINT `sportelli_ibfk_1` FOREIGN KEY (`Id_Centro_ext`) REFERENCES `centri` (`Id`),
   ADD CONSTRAINT `sportelli_ibfk_2` FOREIGN KEY (`Id_operazione_ext`) REFERENCES `operazioni` (`Id`);
-
---
--- Limiti per la tabella `stats`
---
-ALTER TABLE `stats`
-  ADD CONSTRAINT `FK_Stats_operazioni` FOREIGN KEY (`Id_operazione_ext`) REFERENCES `operazioni` (`Id`);
 
 --
 -- Limiti per la tabella `ticket`
