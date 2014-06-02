@@ -23,7 +23,20 @@ Ticket = Backbone.Model.extend({
 					$.getJSON(linkEstimate,function( data ){
 							window.ticket.set({waitingTime:data.waitingTime});
 					});
+					
+				
+					setInterval(this.update, 5000);
+					
 				
 				}
-		}
+		},
+		
+		 update: function(){
+        	
+        	window.ticket.set({waitingTime:parseInt(window.ticket.get('waitingTime')-1)});
+        	
+        	
+        	
+        }
+        
 });
