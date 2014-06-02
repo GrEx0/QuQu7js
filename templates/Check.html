@@ -1,3 +1,4 @@
+
 <h5 class="content-padded hidden">Check</h5>
 	<ul class="table-view">
 		<li class="table-view-divider">Centro: <%=center%>, <%=data%></li>
@@ -15,12 +16,19 @@
     					<h3><b>Distanza dal centro: </b></h3><%=walkingTime%> 
     					
     			</li>
-    			
+    			<li class="table-view-cell">
+    			 <span class="location"></span>
+    			</li>
+    			<li class="table-view-cell">
+    			 <span class="estimation"></span><div id ="map_canvas" style="height: 253px" >
+</div>
+    			</li>
+    		
+    		
     		
 	</ul>
 	
-		
-		<script src="js/view/CheckView.js"></script>
+	
 		
 
 
