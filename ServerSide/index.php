@@ -1,54 +1,23 @@
 <?php
 
-	if (isset($_GET["id"]))
+	if (isset($_GET["id"]) && isset($_GET['regid']))
 	{
-			// connessione a MySQL con l'estensione MySQLi
-				$mysqli = new mysqli("localhost", "root", "", "QuQu7DB");
-
-			// verifica dell'avvenuta connessione
-				if (mysqli_connect_errno()) 
-				{
-					// notifica in caso di errore
-						echo nl2br("Errore in connessione al DBMS: ".mysqli_connect_error());
-					// interruzione delle esecuzioni i caso di errore
-						exit();
- 
-				}
+		require_once 'operations.php';
+			
+			$db = db_connect();
 				
-				else 
-				{
-						// notifica in caso di connessione attiva
-						echo nl2br("Connessione avvenuta con successo \n");
-		
-						$query = "SELECT * FROM Ticket WHERE id=". $_GET["id"];
-						echo nl2br("Query = ". $query . "\n");
-						$result = $mysqli->query($query);
-						if ($result->num_rows >0) 
-						{
-							$record = $result->fetch_array(MYSQLI_ASSOC);
-							echo nl2br("Ticket Emesso \n");
-							echo nl2br("Ora emissione:".$record['OraEmissione']."\n");
-							echo nl2br(json_encode($record)."\n");
-						
-						$query = "SELECT * FROM UtentiAttivi WHERE id_ticket_ext=". $_GET["id"];
-						$result = $mysqli->query($query);
-						if ($result->num_rows>0) {die("Utente gia attivo <br>");}
-						
-							// Inserisco il record trovato nella tabella dinamica UtentiAttivi
-						$query = "INSERT INTO UtentiAttivi (DeviceToken,Id_Ticket_ext) VALUES ('".$_GET['DeviceToken']."','".$_GET['id']."')";
-						echo nl2br($query."\n");
-						
-						$result = $mysqli->query($query);
-						if ($result) 
-						{
-								echo nl2br("Insert avvenuta con successo,Utente Attivo \n");
-						} else echo("ERRORE INSERT");
-						} 
-						else { echo("Ticket non trovato");}
-				}
-				$mysqli->close();
+			if ($db){
+					 	$answer = CheckUser($_GET['id'],$db);
+					 	if ($answer){
+					 				InsertUser($_GET["id"],$_GET["regid"],$db);
+									echo(json_encode($answer));
+					 			 	}
+				    } 	
+					else { echo("errore");}
+				
+		db_disconnect($db);
 	}
-		 else {die("ID non definito");}
+	else {die("ID non definito");}
 
 
  ?> 

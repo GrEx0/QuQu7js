@@ -1,0 +1,2 @@
+SELECT Ticket.id,Ticket.Data,Ticket.Numero,Operazioni.CodiceLettera, Centri.Nome FROM Ticket,Operazioni,Centri
+WHERE Ticket.id=12 and ticket.Id_operazione_ext=Operazioni.id and Ticket.Id_centro_ext = Centri.Id 

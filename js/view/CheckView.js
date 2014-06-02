@@ -5,6 +5,7 @@ Check_View = Backbone.View.extend({
              this.model.on("change", this.render);
             console.log("Check.html template caricato");
             
+<<<<<<< HEAD
             
             
             
@@ -102,6 +103,25 @@ Check_View = Backbone.View.extend({
         	
         	service.route (
         		
+=======
+         /*   navigator.geolocation.getCurrentPosition(estimateWalkingTime,function() {
+                alert('Error getting location');
+            		});*/    
+        },
+        
+        render: function(){
+            this.$el.html( this.template(this.model.toJSON()) );
+            console.log("Rendering Check_view");
+			console.log(window.ticket.get('id_operazione_ext'));
+            return this.el;
+            
+           
+        }
+       
+     /*   estimateWalkingTime: function(position){
+        	google.maps.DistanceMatrixService.getDistanceMatrix (
+    
+>>>>>>> d06d10b769cabe3a9990e64d922c52ba0e006bea
         		{
         			//parametri : 
         			origins : google.maps.LatLng(position.coords.latitude, position.coords.longitude),
@@ -130,6 +150,7 @@ Check_View = Backbone.View.extend({
                     }
         		
         	);
+<<<<<<< HEAD
         }
 
          
@@ -157,6 +178,9 @@ Check_View = Backbone.View.extend({
      
        
         
+=======
+        }*/
+>>>>>>> d06d10b769cabe3a9990e64d922c52ba0e006bea
   
     });
 
