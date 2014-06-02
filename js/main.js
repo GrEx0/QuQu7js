@@ -77,6 +77,7 @@ function onDeviceReady() {
    		window.ticket = new Ticket(); 
 		window.link = new link();
    		window.regid='test';
+   		window.url ="http://192.168.1.103/QuQu7js/ServerSide/";
    
 	});
 	var pushNotification;
