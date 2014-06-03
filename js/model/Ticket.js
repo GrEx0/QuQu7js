@@ -29,34 +29,29 @@ Ticket = Backbone.Model.extend({
                     //aggiornamento stima attesa				
 					window.idtimer=setInterval(this.update, 5000);
 					
-//stima percorso
+				//stima percorso
 									
-var destination="Piazza+Argentina+Milan";
+				var destination="Piazza+Argentina+Milan";
 
-navigator.geolocation.getCurrentPosition(
+				navigator.geolocation.getCurrentPosition(
 						
-function(position) {
-	
-	var mapurl="https://maps.googleapis.com/maps/api/directions/json?origin="+position.coords.latitude+","+position.coords.longitude
-	+"&destination="+destination
-    +"&mode=walking&sensor=false&key=AIzaSyC1U94HTYNNSUpJHot6_bBRIT-C0aGVE-Q";
+				function(position) 
+				{
+					var mapurl="https://maps.googleapis.com/maps/api/directions/json?origin="+position.coords.latitude+","+position.coords.longitude
+								+"&destination="+destination
+    							+"&mode=walking&sensor=false&key=AIzaSyC1U94HTYNNSUpJHot6_bBRIT-C0aGVE-Q";
     
-$.getJSON(mapurl,
-function(response)
-{window.ticket.set({walkingTime:Math.round((response.routes[0].legs[0].duration.value)/60)});
-}
-);
+					$.getJSON(mapurl,function(response)
+								{
+									window.ticket.set({walkingTime:Math.round((response.routes[0].legs[0].duration.value)/60)});
+								});
                 
-},
-           
-function() {alert('Error getting location');}
+				},
+       			function() {alert('Error getting location');}
 
-); //fine stima percorso
-					
-	
-				
-				
-}
+				); //fine stima percorso
+									
+			}
 		},
 		
 		 update: function(){
