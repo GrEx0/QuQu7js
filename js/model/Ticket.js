@@ -3,7 +3,7 @@ Ticket = Backbone.Model.extend({
         "id":"",
         "data":"",
         "center":"N/D",
-        "centerPosition":"N/D",
+        "centerPosition":"Piazza+Argentina+Milan",
         "ticketNumber":"N/D",
         "operation":"",
         "id_operazione_ext":"",
@@ -30,24 +30,31 @@ Ticket = Backbone.Model.extend({
 					window.ticket.routeCalc();
 					
 
-                    //aggiornamento stime				
+                    //aggiornamento stime
+                    if(window.ticket.get('waitingTime')<=0){
+                    	alarm("coglione non hai nessuno davanti");
+                    }
+                    
+                    else{				
 					window.idtimer=setInterval(this.update,5000);
+					}
+					
 					
 					}
 
 		},
 		
-		 update: function(){
+		          update: function(){
 		 	
-        	//update waiting time
-        	window.ticket.set({waitingTime:parseInt(window.ticket.get('waitingTime')-1)});
+        	      //update waiting time
+        	      window.ticket.set({waitingTime:parseInt(window.ticket.get('waitingTime')-1)});
         	
-            if (window.ticket.get('waitingTime') == 1) {
-        		 clearInterval(window.idtimer); 
-        		 }
+                  if (window.ticket.get('waitingTime') == 1) {
+        		  clearInterval(window.idtimer); 
+        		  }
         	
-        	//update walking time	 
-            window.ticket.routeCalc();
+        	      //update walking time	 
+                  window.ticket.routeCalc();
         	
         	
        },
