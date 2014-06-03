@@ -77,7 +77,7 @@ function onDeviceReady() {
    		window.ticket = new Ticket(); 
 		window.link = new link();
    		window.regid='test';
-   		window.url ="http://ququ7.altervista.org/QuQu7js/ServerSide/";
+   		window.url ="http://localhost/QuQu7js/ServerSide/";
    
 	});
 	var pushNotification;
