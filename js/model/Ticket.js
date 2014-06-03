@@ -31,14 +31,13 @@ Ticket = Backbone.Model.extend({
 					
 				//stima percorso
 									
-				var destination="Piazza+Argentina+Milan";
 
 				navigator.geolocation.getCurrentPosition(
 						
 				function(position) 
 				{
 					var mapurl="https://maps.googleapis.com/maps/api/directions/json?origin="+position.coords.latitude+","+position.coords.longitude
-								+"&destination="+destination
+								+"&destination="+window.ticket.get('centerPosition')
     							+"&mode=walking&sensor=false&key=AIzaSyC1U94HTYNNSUpJHot6_bBRIT-C0aGVE-Q";
     
 					$.getJSON(mapurl,function(response)
