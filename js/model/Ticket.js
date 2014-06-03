@@ -3,7 +3,7 @@ Ticket = Backbone.Model.extend({
         "id":"",
         "data":"",
         "center":"N/D",
-        "centerPosition":"0,0",
+        "centerPosition":"N/D",
         "ticketNumber":"N/D",
         "operation":"",
         "id_operazione_ext":"",
@@ -26,71 +26,53 @@ Ticket = Backbone.Model.extend({
 							window.ticket.set({waitingTime:data.waitingTime});
 					});
 					
-                    //aggiornamento stima attesa				
-					window.idtimer=setInterval(this.update, 5000);
+					//stima percorso
+					window.ticket.routeCalc();
 					
-//stima percorso
-									
-var destination="Piazza+Argentina+Milan";
-
-navigator.geolocation.getCurrentPosition(
-						
-function(position) {
-	
-	var mapurl="https://maps.googleapis.com/maps/api/directions/json?origin="+position.coords.latitude+","+position.coords.longitude
-	+"&destination="+destination
-    +"&mode=walking&sensor=false&key=AIzaSyC1U94HTYNNSUpJHot6_bBRIT-C0aGVE-Q";
-    
-$.getJSON(mapurl,
-function(response)
-{window.ticket.set({walkingTime:Math.round((response.routes[0].legs[0].duration.value)/60)});
-}
-);
-                
-},
-           
-function() {alert('Error getting location');}
-
-); //fine stima percorso
+                    //aggiornamento stime				
+					window.idtimer=setInterval(this.update,5000);
 					
-	
-				
-				
-}
+					}
 		},
 		
 		 update: function(){
 		 	
-        	if (window.ticket.get('waitingTime') == 2) {
-        		 clearInterval(window.idtimer); 
-        		 }
+        	//update waiting time
         	window.ticket.set({waitingTime:parseInt(window.ticket.get('waitingTime')-1)});
         	
-        	//stima percorso
-									
-var destination="Piazza+Argentina+Milan";
+            if (window.ticket.get('waitingTime') == 1) {
+        		 clearInterval(window.idtimer); 
+        		 }
+        	
+        	//update walking time	 
+            window.ticket.routeCalc();
+        	
+        	
+       },
+       
+       routeCalc: function(){
+       	 	
+       	 	//stima percorso
 
-navigator.geolocation.getCurrentPosition(
+            navigator.geolocation.getCurrentPosition(
 						
-function(position) {
+            function(position) {
 	
 	var mapurl="https://maps.googleapis.com/maps/api/directions/json?origin="+position.coords.latitude+","+position.coords.longitude
-	+"&destination="+destination
+	+"&destination="+window.ticket.get('centerPosition')
     +"&mode=walking&sensor=false&key=AIzaSyC1U94HTYNNSUpJHot6_bBRIT-C0aGVE-Q";
     
-$.getJSON(mapurl,
-function(response)
-{window.ticket.set({walkingTime:Math.round((response.routes[0].legs[0].duration.value)/60)});
-}
-);
-                
-},
+    
+			$.getJSON(mapurl,
+			function(response){
+            window.ticket.set({walkingTime:Math.round((response.routes[0].legs[0].duration.value)/60)});
+            });
+             }
+             ,
            
-function() {alert('Error getting location');}
-
-); //fine stima percorso
-        	
-        	
-        }
+           function() {alert('Error getting location');}
+           
+           ); //fine stima percorso
+          }
         
 });
