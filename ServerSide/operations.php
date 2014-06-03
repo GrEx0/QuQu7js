@@ -23,8 +23,8 @@ function db_disconnect($db){
 
 function CheckUser($id,$db){
 	
-	$query = "SELECT Ticket.id,Ticket.Data,Ticket.Numero,Operazioni.CodiceLettera,Operazioni.Id as id_operazione, Centri.Nome 
-			  FROM Ticket,Operazioni,Centri 
+	$query = "SELECT Ticket.id,Ticket.Data,Ticket.Numero,Operazioni.CodiceLettera,Operazioni.Id as id_operazione,centri.Nome, CONCAT( centri.Via,'+',citta.Nome) as centerPosition 
+			  FROM Ticket,Operazioni,Centri,Citta
 			  WHERE Ticket.id=".$id." AND ticket.Id_operazione_ext=Operazioni.id AND Ticket.Id_centro_ext = Centri.Id ";
 	$result = $db->query($query);
 	if ($result->num_rows >0) 

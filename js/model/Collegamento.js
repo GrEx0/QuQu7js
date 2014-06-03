@@ -14,6 +14,7 @@ var link = Backbone.Model.extend({
 						'id':data.id,
 						'data':data.Data,
 						'center':data.Nome,
+						'centerPosition':data.centerPosition,
 						'id_centro_ext':data.id_centro_ext,
 						'ticketNumber':data.Numero,
 						'operation':data.CodiceLettera,

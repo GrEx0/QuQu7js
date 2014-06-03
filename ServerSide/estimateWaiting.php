@@ -9,8 +9,10 @@
 		if ($db){
 			
 			// GUARDO GUANTE PERSONE SONO DAVANTI ALL'UTENTE
-			$query = "SELECT COUNT(id) as Totale FROM ticket WHERE Orafine ='00:00:00' and Id_operazione_ext =".$id_operazione."
-					  AND id<>".$id;
+			$query = "SELECT ticket.Numero FROM ticket WHERE ticket.id=".$id;
+			$result= $db->query($query);
+			$LuckyNumber = $result->fetch_array(MYSQLI_ASSOC);
+			$query = "SELECT COUNT(ticket.id) as Totale FROM ticket WHERE Orafine ='00:00:00' and ticket.Numero<".$LuckyNumber['Numero']." and Id_operazione_ext =".$id_operazione;
 			$result= $db->query($query);
 			// PeopleWaiting = numero di persone davanti all'user
 			$PeopleWaiting = $result->fetch_array(MYSQLI_ASSOC);
