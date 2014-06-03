@@ -29,10 +29,12 @@ Ticket = Backbone.Model.extend({
 					//stima percorso
 					window.ticket.routeCalc();
 					
+
                     //aggiornamento stime				
 					window.idtimer=setInterval(this.update,5000);
 					
 					}
+
 		},
 		
 		 update: function(){
