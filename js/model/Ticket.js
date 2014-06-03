@@ -26,10 +26,6 @@ Ticket = Backbone.Model.extend({
 							window.ticket.set({waitingTime:data.waitingTime});
 					});
 
-					//stima percorso
-					window.ticket.routeCalc();
-
-
                     //aggiornamento stime				
 					window.idtimer=setInterval(this.update,5000);
 
@@ -39,17 +35,12 @@ Ticket = Backbone.Model.extend({
 
 		 update: function(){
 
+		if (window.ticket.get('waitingTime') > 1) {
         	//update waiting time
-        	window.ticket.set({waitingTime:parseInt(window.ticket.get('waitingTime')-1)});
-        	
-            if (window.ticket.get('waitingTime') == 1) {
-        		 clearInterval(window.idtimer); 
-        		 }
-        	
-        	//update walking time	 
-            window.ticket.routeCalc();
-        	
-        	
+				window.ticket.set({waitingTime:parseInt(window.ticket.get('waitingTime')-1)}); 
+				window.ticket.routeCalc();
+ 
+        		 } else {clearInterval(window.idtimer);}	        	
        },
        
        routeCalc: function(){
