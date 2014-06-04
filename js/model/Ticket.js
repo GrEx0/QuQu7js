@@ -26,16 +26,13 @@ Ticket = Backbone.Model.extend({
 							window.ticket.set({waitingTime:data.waitingTime});
 					});
 
+
 					//stima percorso
 					window.ticket.routeCalc();
 
 
-                    //aggiornamento stime
-                    if(window.ticket.get('waitingTime')<=0){
-                    	alert("coglione non hai nessuno davanti");
-                    }
-                    
-                    if(window.ticket.get('waitingTime')>0){				
+
+                    //aggiornamento stime				
 					window.idtimer=setInterval(this.update,5000);
 
 					}
@@ -45,20 +42,17 @@ Ticket = Backbone.Model.extend({
 
 		},
 		
-		          update: function(){
-		 	
-        	      //update waiting time
-        	      window.ticket.set({waitingTime:parseInt(window.ticket.get('waitingTime')-1)});
 
-        	
-                  if (window.ticket.get('waitingTime') == 1) {
-        		  clearInterval(window.idtimer); 
-        		  }
-        	
-        	      //update walking time	 
-                  window.ticket.routeCalc();
-        	
-        	
+		 update: function(){
+
+		if (window.ticket.get('waitingTime') > 1) {
+        	//update waiting time
+				window.ticket.set({waitingTime:parseInt(window.ticket.get('waitingTime')-1)}); 
+				window.ticket.routeCalc();
+ 
+        		 } else {clearInterval(window.idtimer);
+        		 	window.alert("non hai nessuno davanti coglione");}	        	
+
        },
        
        routeCalc: function(){
