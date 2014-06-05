@@ -4,16 +4,11 @@
 		$db = db_connect();
 		
 		if ($db){
-			
-			$result = array();
 			$query = "SELECT operazioni.Descrizione FROM operazioni";
-			$result= query($query);
-			
-			
-			
-			
+			$result = $db->query($query);
+			$record = $result->fetch_all(MYSQLI_ASSOC);
 			// codifica dei risultati
-            echo json_encode($result);
+            echo json_encode($record);
 			
 			
 		}

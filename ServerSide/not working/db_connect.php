@@ -24,7 +24,7 @@ class DB_Connect{
 				}
 				else 
 				{
-					return &$conn;
+					return $conn;
 				}
 	}
 	public function close() {
