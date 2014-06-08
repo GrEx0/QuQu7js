@@ -1,15 +1,29 @@
 <!DOCTYPE html>
 <html>
 	<head>
-<<<<<<< HEAD
+
 		<link href="forum-styles.css" rel="stylesheet" type="text/css">
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script src="operatore.js"></script>
-=======
-	<link href="forum-styles.css" rel="stylesheet" type="text/css">	
->>>>>>> b06642d3e7c5f404fa5e35ccbfc12eeb686bf75b
+	
+
 	</head>
 	<body>
+	
+	<!-- inclusione-->
+		
+		
+		
+		<script src="jquery-1.10.2.min.js"></script>
+		
+         <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+		
+		
+		<script src="operatore.js"></script>
+		
+		
+		
+		 
+		
+		
 	
 	
 		
@@ -17,18 +31,31 @@
 	<h1>APPLICAZIONE SPORTELLO
 		</h1>
 		  
-		  <h2>sportello numero:</h2>
+		  <h2>sportello numero:</h2> 
+		  <ul id="number">
+		  	</ul>
 		  <h2>operazione servita:</h2>
+		  <ul id="oper">
+		  	</ul>
 	
 	  <label>
         <span>&nbsp;</span> 
-        <input type="button" class="button" value="Prossimo" /> 
+        <input id="next" type="button" class="button" value="CHIAMA PROSSIMO NUMERO" /> 
     </label>   
 		
 			  <label>  	
-		<span>Cambia operazione :</span>
-        <input id="cc" type="text" name="dept" placeholder="operazione" />
+			  	
+			  	
+		<span><h3>Cambia operazione : </h3></span>
+ 
+    <input id="cc" type="text" name="operazioni" placeholder="operazione" >
+    
+    <input id="changeButton" type="button" class="button" value="CAMBIA" />
+    
+   
     </label>
+    
+    
     
 
 		

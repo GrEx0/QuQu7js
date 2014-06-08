@@ -158,7 +158,8 @@ body,html{
 
 /*######## Smart Green ########*/
 .smart-green {
-	width: 400px;
+	width: 80%;
+	height: 400px;
 	margin-right: auto;
 	margin-left: auto;
 	background: #FFF;
