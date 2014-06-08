@@ -39,7 +39,7 @@ Ticket = Backbone.Model.extend({
         	//update waiting time
 				window.ticket.set({waitingTime:parseInt(window.ticket.get('waitingTime')-1)}); 
 				window.ticket.routeCalc();
-				alert("giacomo nava è gay");
+				//alert("giacomo nava è gay");
  
         		 } else {clearInterval(window.idtimer);}	        	
        },
