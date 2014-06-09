@@ -5,7 +5,7 @@
 		//dichiarazione invariabili
 		$idCentro=8;
 		$idSportello=1;
-		$foo="bella";
+		
 		
 		
 		
@@ -14,7 +14,7 @@
 	switch ($_GET['operation']) {
 		
 		
-		//funzione displaya 
+		//funzione displaya numero sportello
 		
 		case 'getNumber':
 			
@@ -28,6 +28,8 @@
 		}
 			break;
 			
+			
+		//funzione displaya operazione	
 			case 'getOper':
 			
 			$db = db_connect();
@@ -67,11 +69,55 @@
 		break;
 		
 		
+		
+		//cambia l'operazione
+		
 		case 'changeOperazione':
+			
+			
+			$db = db_connect();
+		
+		if ($db){
+		
+		$newOper=$_GET['NuovaOperazione'];
+			
+			$query="UPDATE sportelli SET sportelli.Id_operazione_ext=$newOper WHERE sportelli.Id=$idSportello AND Id_Centro_ext=$idCentro";
+			
+			$result = $db->query($query);
+			
+			
+		} else{ echo('connessione fallita');}
+			
+			
 			
 			break;
 			
+			//chiama il prossimo numero
+			
 		case 'avantiNumero':
+		
+		    $a=time();
+			$ora=date('G i s,$a');
+			$data=date('d M y,$a');
+			
+			if ($db){
+		
+		
+			
+			$query1="UPDATE ticket SET ticket.OraFine=$ora WHERE ticket.Id IN (SELECT MIN(ticket.Id) FROM `ticket` WHERE ticket.OraFine='00:00:00') ";
+			
+			$result1 = $db->query($query1);
+			
+			$query2="SELECT MIN(ticket.Id) FROM ticket,sportelli WHERE ticket.Id_operazione_ext=sportelli.Id_operazione_ext AND ticket.OraChiamata='00:00:00' AND sportelli.Id='1' AND ticket.Id_centro_ext=sportelli.Id_centro_ext";
+			
+			$result2 = $db->query($query2);
+			
+			
+		} else{ echo('connessione fallita');}
+			
+			
+			
+			
 			
 			break;
 		
