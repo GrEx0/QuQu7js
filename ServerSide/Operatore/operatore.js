@@ -26,8 +26,6 @@ $(document).ready(function(){
 		
 	});
 	
-	
-	
 	//chiama prossimo numero	
    $("#next").click(function(){
 		

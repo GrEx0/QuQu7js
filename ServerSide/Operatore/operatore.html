@@ -3,40 +3,18 @@
 	<head>
 
 		<link href="forum-styles.css" rel="stylesheet" type="text/css">
-	
+			<script src="jquery-1.10.2.min.js"></script>
+			<script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+			<script src="operatore.js"></script>
 
 	</head>
 	<body>
-	
-	<!-- inclusione-->
-		
-		
-		
-		<script src="jquery-1.10.2.min.js"></script>
-		
-         <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
-		
-		
-		<script src="operatore.js"></script>
-		
-		
-		
-		 
-		
-		
-	
-	
-		
-<form action="" method="post" class="smart-green">
-	<h1>APPLICAZIONE SPORTELLO
-		</h1>
-		  
-		  <h2>sportello numero:</h2> 
-		  <ul id="number">
-		  	</ul>
+
+	<div class="smart-green">
+	<h1>APPLICAZIONE SPORTELLO</h1>
+	<h2>sportello numero: <span id="number"></span></h2> 
 		  <h2>operazione servita:</h2>
-		  <ul id="oper">
-		  	</ul>
+		  <ul id="oper"></ul>
 		 <h2>attuale:</h2>
 		  <ul id="cliente">
 		  	</ul> 	
@@ -53,17 +31,9 @@
 		<span><h3>Cambia operazione : </h3></span>
  
     <input id="cc" type="text" name="operazioni" placeholder="operazione" value="" >
-    
-    
-    
-   
-    </label>
-    
-    
-    
 
-		
-		</form>
+    </label>	
+	</div>
 		
 		
 	</body>

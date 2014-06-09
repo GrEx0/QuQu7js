@@ -5,10 +5,7 @@
 		//dichiarazione invariabili
 		$idCentro=8;
 		$idSportello=1;
-		
-		
-		
-		
+
  if (isset($_GET['operation'])){
  	
 	switch ($_GET['operation']) {
@@ -17,15 +14,7 @@
 		//funzione displaya numero sportello
 		
 		case 'getNumber':
-			
-			$db = db_connect();
-		
-		if ($db){
-			
-			
-			printf("<li> %s </li>",$idSportello);
-			
-		}
+			printf($idSportello);
 			break;
 			
 			
@@ -35,12 +24,13 @@
 			$db = db_connect();
 		
 			if ($db){
-			$query = "SELECT operazioni.Descrizione FROM operazioni,sportelli	 WHERE sportelli.id_operazione_ext=operazioni.Id AND sportelli.Id=$idSportello";
-			$result = $db->query($query);
-			while ($record = $result->fetch_array(MYSQLI_ASSOC)) {
-				printf("<li><a>%s</a></li>",$record['Descrizione']);
+					$query = "SELECT operazioni.Descrizione FROM operazioni,sportelli	 WHERE sportelli.id_operazione_ext=operazioni.Id AND sportelli.Id=$idSportello";
+					$result = $db->query($query);
+					$record = $result->fetch_array(MYSQLI_ASSOC);
+					printf($record['Descrizione']);
+					
 			}
-		}
+			db_disconnect($db);
 			break;
 			
 			//funzione displaya cliente attuale	
@@ -49,7 +39,8 @@
 			$db = db_connect();
 		
 			if ($db){
-			$query = "SELECT operazioni.CodiceLettera,ticket.Numero FROM ticket,operazioni,sportelli WHERE ticket.Id_operazione_ext=operazioni.Id AND sportelli.Id=$idSportello AND sportelli.ClienteAttuale=ticket.Id";
+			$query = "SELECT operazioni.CodiceLettera,ticket.Numero FROM ticket,operazioni,sportelli 
+					  WHERE ticket.Id_operazione_ext=operazioni.Id AND sportelli.Id=$idSportello AND sportelli.Id_ticketCurr_ext=ticket.Id";
 			$result = $db->query($query);
 			while ($record = $result->fetch_array(MYSQLI_ASSOC)) {
 				printf("<li><a>%s %s</a></li>",$record['CodiceLettera'],$record['Numero']);
@@ -72,8 +63,8 @@
 			
 			
 			while ($row = mysqli_fetch_assoc($result)) {
-    $record[] = $row;
-}
+						$record= $row;
+			}
 			// codifica dei risultati
             echo json_encode($record);
 			
@@ -109,12 +100,8 @@
 			//chiama il prossimo numero
 			
 		case 'avantiNumero':
-		
-		echo("bella");
-		
-		    $a=time();
-			$ora=date('G:i:s,$a');
-			$data=date('d/M/y,$a');
+			$ora = date('H:i:s')
+			$data = date('d/m/y');
 			
 			$db = db_connect();
 			
@@ -124,16 +111,16 @@
 		    
 			$query="SELECT sportelli.ClienteAttuale FROM sportelli WHERE sportelli.Id=$idSportello";
 			
-			$result1 = $db->query($query);
+			$result = $db->query($query);
 			
 			//se lo sportello stava servendo 
 			
-			if($result1!=NULL){
+			if($result!='NULL'){
 	     			$query="UPDATE ticket SET ticket.OraFine=$ora 
 			                            WHERE ticket.Id IN (SELECT MIN(ticket.Id) 
 			                            FROM `ticket` WHERE ticket.OraFine='00:00:00') ";
 			
-			$result2 = $db->query($query);
+			$result= $db->query($query);
 			}
 			
 			//controllo se ci sono prossimi numeri da chiamare
