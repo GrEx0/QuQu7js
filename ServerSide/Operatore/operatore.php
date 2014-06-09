@@ -43,6 +43,20 @@
 		}
 			break;
 			
+			//funzione displaya cliente attuale	
+			case 'getCliente':
+			
+			$db = db_connect();
+		
+			if ($db){
+			$query = "SELECT operazioni.CodiceLettera,ticket.Numero FROM ticket,operazioni,sportelli WHERE ticket.Id_operazione_ext=operazioni.Id AND sportelli.Id=$idSportello AND sportelli.ClienteAttuale=ticket.Id";
+			$result = $db->query($query);
+			while ($record = $result->fetch_array(MYSQLI_ASSOC)) {
+				printf("<li><a>%s %s</a></li>",$record['CodiceLettera'],$record['Numero']);
+			}
+		}
+			break;
+			
 			
 			//funzione prendi le operazioni da mettere nella combobox
 		
@@ -96,28 +110,70 @@
 			
 		case 'avantiNumero':
 		
+		echo("bella");
+		
 		    $a=time();
-			$ora=date('G i s,$a');
-			$data=date('d M y,$a');
+			$ora=date('G:i:s,$a');
+			$data=date('d/M/y,$a');
+			
+			$db = db_connect();
 			
 			if ($db){
 		
-		
+		    //controllo se lo sportello non sta servendo 
+		    
+			$query="SELECT sportelli.ClienteAttuale FROM sportelli WHERE sportelli.Id=$idSportello";
 			
-			$query1="UPDATE ticket SET ticket.OraFine=$ora WHERE ticket.Id IN (SELECT MIN(ticket.Id) FROM `ticket` WHERE ticket.OraFine='00:00:00') ";
+			$result1 = $db->query($query);
 			
-			$result1 = $db->query($query1);
+			//se lo sportello stava servendo 
 			
-			$query2="SELECT MIN(ticket.Id) FROM ticket,sportelli WHERE ticket.Id_operazione_ext=sportelli.Id_operazione_ext AND ticket.OraChiamata='00:00:00' AND sportelli.Id='1' AND ticket.Id_centro_ext=sportelli.Id_centro_ext";
+			if($result1!=NULL){
+	     			$query="UPDATE ticket SET ticket.OraFine=$ora 
+			                            WHERE ticket.Id IN (SELECT MIN(ticket.Id) 
+			                            FROM `ticket` WHERE ticket.OraFine='00:00:00') ";
 			
-			$result2 = $db->query($query2);
+			$result2 = $db->query($query);
+			}
+			
+			//controllo se ci sono prossimi numeri da chiamare
+			
+			$query= "SELECT MIN(ticket.Id) 
+			                             FROM ticket,sportelli 
+			                             WHERE ticket.Id_operazione_ext=sportelli.Id_operazione_ext 
+			                                   AND ticket.Id_centro_ext=sportelli.Id_centro_ext 
+			                                   AND sportelli.Id=$idSportello 
+			                                   AND ticket.Id_centro_ext=$idCentro 
+			                                   AND ticket.OraChiamata='00:00:00'";
+			                                   
+			$prossimo=$db->query($query);
+			
+			
+			//chiama il prossimo numero 
+			
+			if(mysqli_num_rows($prossimo) != 0){
+			
+			$query="UPDATE ticket SET ticket.OraChiamata=$ora 
+			         WHERE ticket.Id IN (SELECT MIN(ticket.Id) 
+			                             FROM ticket,sportelli 
+			                             WHERE ticket.Id_operazione_ext=sportelli.Id_operazione_ext 
+			                                   AND ticket.Id_centro_ext=sportelli.Id_centro_ext 
+			                                   AND sportelli.Id=$idSportello 
+			                                   AND ticket.Id_centro_ext=$idCentro 
+			                                   AND ticket.OraChiamata='00:00:00')";
+			
+			$result3 = $db->query($query);
+			
+			$query="UPDATE sportelli SET sportelli.ClienteAttuale=$prossimo
+			         WHERE sportelli.Id=$idSportello";
+			
+			$result4 = $db->query($query);
+			
+			}else{echo ('nessun numero da servire');}
 			
 			
 		} else{ echo('connessione fallita');}
-			
-			
-			
-			
+		
 			
 			break;
 		
