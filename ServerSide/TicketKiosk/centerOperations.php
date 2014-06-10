@@ -17,6 +17,7 @@ $idCentro=8;
 			while ($record = $result->fetch_array(MYSQLI_ASSOC)) {
 				printf("<li><a href='centerOperations.php?&operation=printTicket&id_operation=%s&CodiceLettera=%s'>%s</a></li>",$record['id'],$record['CodiceLettera'],$record['CodiceLettera']." - ".$record['Descrizione']);
 			}
+		db_disconnect($db);
 		}
 			break;
 		
@@ -24,8 +25,10 @@ $idCentro=8;
 			$db = db_connect();
 			$id_op = $_GET['id_operation'];
 			$Lettera = $_GET['CodiceLettera'];
-			$query = "SELECT ticket.Numero  FROM ticket
-					  WHERE ticket.id_operazione_ext =".$id_op." AND ticket.Numero =(select max(ticket.Numero) FROM ticket)";
+			// SELEZIONO L'ULTIMO NUMERO STAMPATO NELLA DATA ODIERNA
+			$query = "SELECT MAX(ticket.Numero) AS Numero  FROM ticket
+					  WHERE ticket.id_operazione_ext =".$id_op." AND ticket.Data='".date('d/m/y')."'" ;
+			//		  echo($query);
 			$result = $db->query($query);
 			$MaxNum = $result->fetch_array(MYSQLI_ASSOC);
 			$currNum = $MaxNum['Numero']+1;
@@ -33,12 +36,14 @@ $idCentro=8;
 			//echo($query);
 			$result = $db->query($query);
 			if ($result) {
+					$lastId = $db ->insert_id;
 					echo("<table>");
 					printf("<tr><td>Numero ticket: %s %s</td></tr>",$Lettera,$currNum);
-					printf("<tr><td><img src='%s' alt='QRCode' height='150' width='150'></td></tr>","http://chart.apis.google.com/chart?cht=qr&chs=150x150&chl=http://localhost/index.php?&id=".$currNum);
+					printf("<tr><td><img src='%s' alt='QRCode' height='150' width='150'></td></tr>","http://chart.apis.google.com/chart?cht=qr&chs=150x150&chl=http://localhost/QuQu7js/ServerSide/index.php?&id=".$lastId);
 					echo("</table>");
+					echo("link: http://localhost/QuQu7js/ServerSide/index.php?&id=".$lastId);
 					} else echo("errore insert");
-			
+			db_disconnect($db);
 			
 			break;
 		default: echo('operazione non supportata');	
