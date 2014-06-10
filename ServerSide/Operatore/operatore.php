@@ -5,11 +5,7 @@
 		//dichiarazione invariabili
 		$idCentro=8;
 		$idSportello=1;
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 5cbdeddac47db5b5dff59f946ba374efbb69029a
  if (isset($_GET['operation'])){
  	
 	switch ($_GET['operation']) {
@@ -18,19 +14,10 @@
 		//funzione displaya numero sportello FUNZIONA
 		
 		case 'getNumber':
-<<<<<<< HEAD
-			
-			$db = db_connect();
-		
-		if ($db){
-			printf("<li> %s </li>",$idSportello);
-			
-		}
-		break;
-=======
+
 			printf($idSportello);
 			break;
->>>>>>> 5cbdeddac47db5b5dff59f946ba374efbb69029a
+
 			
 			
 		//funzione displaya operazione FUNZIONA
@@ -39,7 +26,6 @@
 			$db = db_connect();
 		
 			if ($db){
-<<<<<<< HEAD
 			$query = "SELECT operazioni.Descrizione FROM operazioni,sportelli WHERE sportelli.id_operazione_ext=operazioni.Id AND sportelli.Id=$idSportello";
 			$result = $db->query($query);
 			while ($record = $result->fetch_array(MYSQLI_ASSOC)) {
@@ -47,16 +33,7 @@
 			}
 		}
 		break;
-=======
-					$query = "SELECT operazioni.Descrizione FROM operazioni,sportelli	 WHERE sportelli.id_operazione_ext=operazioni.Id AND sportelli.Id=$idSportello";
-					$result = $db->query($query);
-					$record = $result->fetch_array(MYSQLI_ASSOC);
-					printf($record['Descrizione']);
-					
-			}
-			db_disconnect($db);
-			break;
->>>>>>> 5cbdeddac47db5b5dff59f946ba374efbb69029a
+
 			
 			
 		//funzione displaya cliente attuale	FUNZIONA
@@ -65,16 +42,13 @@
 			$db = db_connect();
 		
 			if ($db){
-<<<<<<< HEAD
+
 			$query = "SELECT operazioni.CodiceLettera,ticket.Numero 
 			          FROM ticket,operazioni,sportelli 
 			          WHERE ticket.Id_operazione_ext=operazioni.Id 
 			                AND sportelli.Id=$idSportello 
 			                AND sportelli.Id_ticketCurr_ext=ticket.Id";
-=======
-			$query = "SELECT operazioni.CodiceLettera,ticket.Numero FROM ticket,operazioni,sportelli 
-					  WHERE ticket.Id_operazione_ext=operazioni.Id AND sportelli.Id=$idSportello AND sportelli.Id_ticketCurr_ext=ticket.Id";
->>>>>>> 5cbdeddac47db5b5dff59f946ba374efbb69029a
+
 			$result = $db->query($query);
 			while ($record = $result->fetch_array(MYSQLI_ASSOC)) {
 				printf("<li><a>%s %s</a></li>",$record['CodiceLettera'],$record['Numero']);
@@ -94,15 +68,11 @@
 			$result=$db->query($query); 
 			
 			while ($row = mysqli_fetch_assoc($result)) {
-<<<<<<< HEAD
+
             $record[] = $row;
             }
 			      
-=======
-						$record= $row;
-			}
-			// codifica dei risultati
->>>>>>> 5cbdeddac47db5b5dff59f946ba374efbb69029a
+
             echo json_encode($record);
 			
 			
@@ -128,32 +98,24 @@
 		//chiama il prossimo numero
 			
 		case 'avantiNumero':
-<<<<<<< HEAD
-		
-		    $a=time();
-			$ora=date('G:i:s,$a');
-			$data=date('d/M/y,$a');
-=======
-			$ora = date('H:i:s')
+
+			$ora = date('H:i:s');
 			$data = date('d/m/y');
 			
->>>>>>> 5cbdeddac47db5b5dff59f946ba374efbb69029a
+
 			$db = db_connect();
 			if ($db){
 		
 		    //controllo se lo sportello non sta servendo 
 		    
-<<<<<<< HEAD
+
 			$query="SELECT sportelli.Id_ticketCurr_ext FROM sportelli WHERE sportelli.Id=$idSportello";
-=======
-			$query="SELECT sportelli.ClienteAttuale FROM sportelli WHERE sportelli.Id=$idSportello";
-			
->>>>>>> 5cbdeddac47db5b5dff59f946ba374efbb69029a
+
 			$result = $db->query($query);
 			
             //se lo sportello stava servendo bisogna anche chiudere il turno prima 
 			
-<<<<<<< HEAD
+
 					while ($row = mysqli_fetch_assoc($result)) {
                     $record[] = $row;
 }
@@ -172,15 +134,7 @@
 			
 			$result = $db->query($query);
 			}else{echo("sportello da avviare all'attività");}
-=======
-			if($result!='NULL'){
-	     			$query="UPDATE ticket SET ticket.OraFine=$ora 
-			                            WHERE ticket.Id IN (SELECT MIN(ticket.Id) 
-			                            FROM `ticket` WHERE ticket.OraFine='00:00:00') ";
-			
-			$result= $db->query($query);
-			}
->>>>>>> 5cbdeddac47db5b5dff59f946ba374efbb69029a
+
 			
 			//controllo se ci sono prossimi numeri da chiamare
 			
