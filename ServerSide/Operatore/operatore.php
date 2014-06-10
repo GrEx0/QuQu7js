@@ -1,5 +1,4 @@
 <?php
-		
 		require_once(realpath('../operations.php'));	
 		
 		//dichiarazione invariabili
@@ -11,175 +10,146 @@
 	switch ($_GET['operation']) {
 		
 		
-		//funzione displaya numero sportello FUNZIONA
+		//funzione displaya numero sportello
 		
 		case 'getNumber':
-
 			printf($idSportello);
 			break;
-
 			
 			
-		//funzione displaya operazione FUNZIONA
+		//funzione displaya operazione	
 			case 'getOper':
 			
 			$db = db_connect();
 		
 			if ($db){
-			$query = "SELECT operazioni.Descrizione FROM operazioni,sportelli WHERE sportelli.id_operazione_ext=operazioni.Id AND sportelli.Id=$idSportello";
-			$result = $db->query($query);
-			while ($record = $result->fetch_array(MYSQLI_ASSOC)) {
-				printf("<li><a>%s</a></li>",$record['Descrizione']);
+					$query = "SELECT CONCAT(operazioni.CodiceLettera,' - ',operazioni.Descrizione) as Descrizione
+							  FROM operazioni,sportelli	 WHERE sportelli.id_operazione_ext=operazioni.Id 
+							  AND sportelli.Id=$idSportello";
+					$result = $db->query($query);
+					$record = $result->fetch_array(MYSQLI_ASSOC);
+					printf($record['Descrizione']);
+					
 			}
-		}
-		break;
-
+			db_disconnect($db);
+			break;
 			
-			
-		//funzione displaya cliente attuale	FUNZIONA
+			//funzione displaya cliente attuale	
 			case 'getCliente':
 			
 			$db = db_connect();
 		
 			if ($db){
-
-			$query = "SELECT operazioni.CodiceLettera,ticket.Numero 
-			          FROM ticket,operazioni,sportelli 
-			          WHERE ticket.Id_operazione_ext=operazioni.Id 
-			                AND sportelli.Id=$idSportello 
-			                AND sportelli.Id_ticketCurr_ext=ticket.Id";
-
+			$query = "SELECT operazioni.CodiceLettera,ticket.Numero FROM ticket,operazioni,sportelli 
+					  WHERE ticket.Id_operazione_ext=operazioni.Id AND sportelli.Id=$idSportello 
+					  AND sportelli.Id_ticketCurr_ext=ticket.Id";
 			$result = $db->query($query);
-			while ($record = $result->fetch_array(MYSQLI_ASSOC)) {
-				printf("<li><a>%s %s</a></li>",$record['CodiceLettera'],$record['Numero']);
-			}
+			$record = $result->fetch_array(MYSQLI_ASSOC);
+			printf("%s %s",$record['CodiceLettera'],$record['Numero']);
+			
 		}
-		break;
+			break;
 			
 			
-		//funzione prendi le operazioni da mettere nella combobox FUNZIONA MA VA MIGLIORATA LA QUERY
-		    case 'getOperazioni':
+			//funzione prendi le operazioni da mettere nella combobox
 		
+		case 'getOperazioni':
+		
+		$db = db_connect();
+		
+		if ($db){
+		
+			$query="SELECT operazioni.Id,CONCAT(operazioni.CodiceLettera,' ',operazioni.Descrizione) as Descrizione
+					FROM sportelli,operazioni
+					WHERE sportelli.Id_Centro_ext=$idCentro AND sportelli.Id_operazione_ext=operazioni.id
+					GROUP BY operazioni.id";
+			
+			$result=$db->query($query); 
+			
+			
+			while ($row = mysqli_fetch_assoc($result)) {
+						printf("<option value='%s'>%s</option>",$row['Id'],$row['Descrizione']);
+			}
+			
+			// codifica dei risultati			
+			
+		} else{ echo('connessione fallita');}
+		
+		break;
+		
+		
+		
+		//cambia l'operazione
+		
+		case 'changeOperazione':
 			$db = db_connect();
 		
 			if ($db){
-		
-			$query="SELECT operazioni.Id,operazioni.Descrizione FROM operazioni WHERE 1";
-			$result=$db->query($query); 
+				$newOper=$_GET['NuovaOperazione'];
+				$query="UPDATE sportelli 
+						SET sportelli.Id_operazione_ext=$newOper 
+						WHERE sportelli.Id=$idSportello AND Id_Centro_ext=$idCentro";
 			
-			while ($row = mysqli_fetch_assoc($result)) {
-
-            $record[] = $row;
-            }
-			      
-
-            echo json_encode($record);
-			
-			
-		} else{ echo('connessione fallita');}
-		
-		break;
-		
-		
-		
-		//cambia l'operazione FUNZIONA
-			case 'changeOperazione':
-			
-			$db = db_connect();
-		    if ($db){
-		    $newOper=$_GET['NuovaOperazione'];
-			$query="UPDATE sportelli SET sportelli.Id_operazione_ext=$newOper WHERE sportelli.Id=$idSportello AND Id_Centro_ext=$idCentro";
 			$result = $db->query($query);
+			if ($result){echo('SUCCESS');}
+			
 			
 		} else{ echo('connessione fallita');}
-		
-		break;
 			
-		//chiama il prossimo numero
+			
+			
+			break;
+			
+			//chiama il prossimo numero
 			
 		case 'avantiNumero':
-
 			$ora = date('H:i:s');
 			$data = date('d/m/y');
 			
-
 			$db = db_connect();
+			
 			if ($db){
 		
 		    //controllo se lo sportello non sta servendo 
 		    
-
 			$query="SELECT sportelli.Id_ticketCurr_ext FROM sportelli WHERE sportelli.Id=$idSportello";
-
-			$result = $db->query($query);
-			
-            //se lo sportello stava servendo bisogna anche chiudere il turno prima 
-			
-
-					while ($row = mysqli_fetch_assoc($result)) {
-                    $record[] = $row;
-}
-          
-			            //se non è vero che il ticket_curr==null , allora il ticket_curr è non null , allora lo sportello era già attivo
-			if(is_null($record['Id_ticketCurr_ext'])==FALSE){ 
-				echo("sportello precedentemente attivo");
-/*questa query funziona*/$query="UPDATE ticket 
-	     			             SET ticket.OraFine=$ora 
-	     			             WHERE ticket.Id IN (SELECT ticket.Id 
-	     			                            FROM sportelli 
-	     			                            WHERE sportelli.Id=$idSportello 
-	     			                            	  AND sportelli.Id_ticketCurr_ext=ticket.Id 
-	     			                            	  AND ticket.OraFine='00:00:00' 
-	     			                            	  AND ticket.Orachiamata!='00:00:00') ";
 			
 			$result = $db->query($query);
-			}else{echo("sportello da avviare all'attività");}
-
+			$record = $result->fetch_array(MYSQLI_ASSOC);
+			
+			//se lo sportello stava servendo 
+			
+			if($record['Id_ticketCurr_ext']!=='NULL'){
+				echo('lo sportello non sta servendo');
+				$record = $result->fetch_array(MYSQLI_ASSOC);
+				$idServito = $record['Id_ticketCurr_ext'];
+	     		$query="UPDATE ticket SET ticket.OraFine=$ora 
+			                            WHERE ticket.Id=$idServito";
+				$result= $db->query($query);
+			}
 			
 			//controllo se ci sono prossimi numeri da chiamare
 			
-			                 //seleziona il ticket che è stato emesso prima per una certa operazione
-/*questa query funziona*/$query= "SELECT MIN(ticket.Id) 
-			                             FROM ticket,sportelli 
-			                             WHERE ticket.Id_operazione_ext=sportelli.Id_operazione_ext 
-			                                   AND ticket.Id_centro_ext=sportelli.Id_Centro_ext 
-			                                   AND sportelli.Id=$idSportello 
-			                                   AND ticket.Id_centro_ext=$idCentro 
-			                                   AND ticket.OraChiamata='00:00:00'";
+			$query= "SELECT min(ticket.Id) as Id_ticket
+					 FROM ticket,sportelli
+					 WHERE ticket.Id_operazione_ext=(SELECT sportelli.Id_operazione_ext FROM sportelli WHERE sportelli.id =$idSportello) 
+					 AND ticket.OraChiamata='00:00:00' AND ticket.Data='".date('d/m/y')."'"	;
 			                                   
-			$prossimo=$db->query($query);
-			
+			$result=$db->query($query);
 
-			//chiama il prossimo numero se c'è
+			//chiama il prossimo numero 
 			
-			if(mysqli_num_rows($prossimo) != 0){
-								
-			echo ("avanti il prossimo");
-			
-			    //aggiorna l'ora di chiamata del ticket
-/*questa query non funziona*/			$query="UPDATE ticket SET ticket.OraChiamata=$ora 
-			               WHERE ticket.Id IN (SELECT MIN(ticket.Id) 
-			                             FROM ticket,sportelli 
-			                             WHERE ticket.Id_operazione_ext=sportelli.Id_operazione_ext 
-			                                   AND ticket.Id_centro_ext=sportelli.Id_Centro_ext 
-			                                   AND sportelli.Id=$idSportello 
-			                                   AND ticket.Id_centro_ext=$idCentro 
-			                                   AND ticket.OraChiamata='00:00:00')";
+			if($result->num_rows > 0){
+			$prossimo = $result->fetch_array(MYSQLI_ASSOC);
+			$query="UPDATE ticket SET ticket.OraChiamata=$ora 
+			         WHERE ticket.Id=".$prossimo['Id_ticket'];
 			
 			$result = $db->query($query);
 			
-			$prossimo= mysqli_fetch_assoc($prossimo);
-	
-			$prossimo=$prossimo['MIN(ticket.Id)'];
-		
+			$query="UPDATE sportelli SET sportelli.ClienteAttuale=".$prossimo['Id_ticket']."
+			         WHERE sportelli.Id=$idSportello";
 			
-			  //aggiorna l'occupazione dello sportello
-/*questa query funziona*/$query="UPDATE sportelli SET sportelli.Id_ticketCurr_ext=$prossimo
-			                     WHERE sportelli.Id=$idSportello";
-			
-			$result= $db->query($query);
-			
-			
+			$result = $db->query($query);
 			
 			}else{echo ('nessun numero da servire');}
 			

@@ -1,38 +1,34 @@
 $(document).ready(function(){
 	
-	
+	console.log('figa');
 	$("#number").load("operatore.php?&operation=getNumber");
 	$("#oper").load("operatore.php?&operation=getOper");
 	$("#cliente").load("operatore.php?&operation=getCliente");
+	$('#combobox').load("operatore.php?&operation=getOperazioni");
 	
 	
-	$('#cc').combobox({
-		
-		
-		url:'operatore.php?&operation=getOperazioni',
-		valueField:'Id',
-		textField: 'Descrizione',
-		onSelect : function(record){
-			
-			//cambia operazione
-			
-			$('#cc').combobox('setValue', record.Id);
-		    
-		    $(this).load("operatore.php?&operation=changeOperazione&NuovaOperazione="+record.Id);
-		    
-		    location.reload();
-		  
-		}
-		
+	$('#combobox').change(function() {
+   // assign the value to a variable, so you can test to see if it is working
+    	var selectVal = $('#combobox :selected').val();
+    	$.get("operatore.php?&operation=changeOperazione&NuovaOperazione="+selectVal,function(data){
+    		if (data == 'SUCCESS')
+    			{
+    				alert("Operazione Aggiornata.");
+    				$('#oper').html($('#combobox :selected').text());
+    			}
+    		});
+    	
 	});
+
 	
 	//chiama prossimo numero	
    $("#next").click(function(){
 		
-		$(this).load("operatore.php?&operation=avantiNumero");
+		$.get("operatore.php?&operation=avantiNumero",function(data){
+			console.log('eccomi');
+			alert(data);
+		});
 		
-		
-		location.reload();
 		});
 
 
