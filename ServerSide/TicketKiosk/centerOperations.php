@@ -39,7 +39,7 @@ $idCentro=8;
 					$lastId = $db ->insert_id;
 					echo("<table>");
 					printf("<tr><td>Numero ticket: %s %s</td></tr>",$Lettera,$currNum);
-					printf("<tr><td><img src='%s' alt='QRCode' height='150' width='150'></td></tr>","http://chart.apis.google.com/chart?cht=qr&chs=150x150&chl=http://localhost/QuQu7js/ServerSide/index.php?&id=".$lastId);
+					printf("<tr><td><img src='%s' alt='QRCode' height='150' width='150'></td></tr>","http://chart.apis.google.com/chart?cht=qr&chs=150x150&chl=http://localhost/QuQu7js/ServerSide/index.php?%26id=".$lastId);
 					echo("</table>");
 					echo("link: http://localhost/QuQu7js/ServerSide/index.php?&id=".$lastId);
 					} else echo("errore insert");
