@@ -5,10 +5,10 @@ var link = Backbone.Model.extend({
     },
  
     attributesChanged: function(){
-    	console.log("Link rilevato dal modello:"+this.get('link'));
+    	alert("Link rilevato dal modello:"+this.get('link'));
       if (this.get('link'))
 		{
-			console.log("sono dentro if");
+			alert("sono dentro if");
 			$.getJSON( this.get('link'),function( data ){
 					window.ticket.set({
 						'id':data.id,
