@@ -23,6 +23,7 @@ AcquireQR_View = Backbone.View.extend({
 					alert("QRCode Rilevato\n" + "Result: " + result.text );  
             		console.log("Scanner result: \n" +"text: " + result.text);
             		window.ticketLink = result.text;
+            		$("#results").html(window.ticketLink); 
         		});
         	
      
@@ -31,7 +32,6 @@ AcquireQR_View = Backbone.View.extend({
 			
 	/*		 ticketLink = window.prompt("Inserisci link ticket");
 			 console.log(ticketLink);*/
-			$("#results").html(window.ticketLink); 
 			window.link.set({link: window.ticketLink+"&regid="+window.regid});
          }
     });
