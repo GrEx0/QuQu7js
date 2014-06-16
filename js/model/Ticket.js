@@ -39,17 +39,24 @@ Ticket = Backbone.Model.extend({
         	//update waiting time
 				window.ticket.set({waitingTime:parseInt(window.ticket.get('waitingTime')-1)}); 
 				window.ticket.routeCalc();
-				//alert("giacomo nava è gay");
+				//alert
+				if(parseInt(window.ticket.get('waitingTime'))<=5+parseInt(window.ticket.get('walkingTime'))){
+					
+					alert("tra circa"+window.ticket.get('waitingTime')+
+					      "è il tuo tuno.\nLa distanza dal centro è circa"+window.ticket.get('walkingTime')+
+					      "minuti.\nTi consigliamo di iniziare ad incamminarti");
+					
+				};
  
-        		 } else {clearInterval(window.idtimer);}	        	
+         } else {clearInterval(window.idtimer);}	        	
        },
        
-       routeCalc: function(){
-       	 	
-       	 	//stima percorso
+        routeCalc: function(){
+  
+          	 	//stima percorso
 
-            navigator.geolocation.getCurrentPosition(
-
+             navigator.geolocation.getCurrentPosition(
+ 
             function(position) {
 
 	var mapurl="https://maps.googleapis.com/maps/api/directions/json?origin="+position.coords.latitude+","+position.coords.longitude
@@ -57,7 +64,7 @@ Ticket = Backbone.Model.extend({
     +"&mode=walking&sensor=false&key=AIzaSyC1U94HTYNNSUpJHot6_bBRIT-C0aGVE-Q";
     
     
-			$.getJSON(mapurl,
+        	$.getJSON(mapurl,
 			function(response){
             window.ticket.set({walkingTime:Math.round((response.routes[0].legs[0].duration.value)/60)});
             });
