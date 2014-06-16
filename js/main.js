@@ -76,10 +76,8 @@ function onDeviceReady() {
    		Backbone.history.start();
    		window.ticket = new Ticket(); 
 		window.link = new link();
-   		window.regid='test'; 
-   		window.url ="http://localhost:8888/QuQu7js/ServerSide/";
-   		//"http://ququ7.altervista.org/QuQu7js/ServerSide/";
-
+   		window.regid='test';
+   		window.url ="http://172.16.42.24/QuQu7js/ServerSide/";
    
 	});
 	var pushNotification;
