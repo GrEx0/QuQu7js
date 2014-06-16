@@ -10,7 +10,18 @@ var link = Backbone.Model.extend({
 		{
 			alert("sono dentro if");
 			$.getJSON( this.get('link'),function( data ){
-					window.ticket.set({
+				
+				this.longfunctionfirst(shortfunctionsecond);
+					
+				
+			});
+		}
+        
+    },
+    
+    longfunctionFirst: function(callback){
+    	setTimeout(function(){
+    			window.ticket.set({
 						'id':data.id,
 						'data':data.Data,
 						'center':data.Nome,
@@ -20,11 +31,20 @@ var link = Backbone.Model.extend({
 						'operation':data.CodiceLettera,
 						'id_operazione_ext':data.id_operazione
 					});
-			setTimeout($("#answer").html(window.ticket.get('data')+": SUCCESS, Ticket "+window.ticket.get('operation')+window.ticket.get('ticketNumber')+" attivato") , 1000 );		
-				
-			});
-		}
-        
+    		if(typeof callback == 'function')
+            callback();
+    		
+    	},1000);
+    	
+    },
+    
+    shortfunctionsecond: function(){
+    	
+    	 setTimeout($("#answer").html(window.ticket.get('data')+": SUCCESS, Ticket "+window.ticket.get('operation')+window.ticket.get('ticketNumber')+" attivato"), 200);
+    	
     }
+    
+    
+    
   
   });
