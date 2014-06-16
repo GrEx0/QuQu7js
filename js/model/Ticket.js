@@ -39,6 +39,7 @@ Ticket = Backbone.Model.extend({
         	//update waiting time
 				window.ticket.set({waitingTime:parseInt(window.ticket.get('waitingTime')-1)}); 
 				window.ticket.routeCalc();
+
 				//alert
 				if(parseInt(window.ticket.get('waitingTime'))<=5+parseInt(window.ticket.get('walkingTime'))){
 					
@@ -47,7 +48,7 @@ Ticket = Backbone.Model.extend({
 					      "minuti.\nTi consigliamo di iniziare ad incamminarti");
 					
 				};
- 
+
          } else {clearInterval(window.idtimer);}	        	
        },
        
