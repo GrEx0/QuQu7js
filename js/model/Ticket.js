@@ -61,8 +61,8 @@ Ticket = Backbone.Model.extend({
             function(position) {
 
 	var mapurl="https://maps.googleapis.com/maps/api/directions/json?origin="+position.coords.latitude+","+position.coords.longitude
-	+"&destination="+window.ticket.get('centerPosition')
-    +"&mode=walking&sensor=false&key=AIzaSyC1U94HTYNNSUpJHot6_bBRIT-C0aGVE-Q";
+	+"%26destination="+window.ticket.get('centerPosition')
+    +"%26mode=walking%26sensor=true%26key=AIzaSyC1U94HTYNNSUpJHot6_bBRIT-C0aGVE-Q";
     
     
         	$.getJSON(mapurl,
