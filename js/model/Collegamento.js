@@ -11,7 +11,7 @@ var link = Backbone.Model.extend({
 			alert("sono dentro if");
 			$.getJSON( this.get('link'),function( data ){
 				
-				this.longfunctionfirst(shortfunctionsecond);
+				this.longFunctionFirst(shortfunctionsecond);
 					
 				
 			});
@@ -19,7 +19,7 @@ var link = Backbone.Model.extend({
         
     },
     
-    longfunctionFirst: function(callback){
+    longFunctionFirst: function(callback){
     	setTimeout(function(){
     			window.ticket.set({
 						'id':data.id,
