@@ -41,11 +41,11 @@ Ticket = Backbone.Model.extend({
 				window.ticket.routeCalc();
 
 				//alert
-				if(parseInt(window.ticket.get('waitingTime'))<=5+parseInt(window.ticket.get('walkingTime'))){
+				if(parseInt(window.ticket.get('waitingTime'))<=2+parseInt(window.ticket.get('walkingTime'))){
 					
-					alert("tra circa"+window.ticket.get('waitingTime')+
-					      "è il tuo tuno.\nLa distanza dal centro è circa"+window.ticket.get('walkingTime')+
-					      "minuti.\nTi consigliamo di iniziare ad incamminarti");
+					alert("tra circa "+window.ticket.get('waitingTime')+
+					      " minuti è il tuo tuno.\nLa distanza dal centro è circa "+window.ticket.get('walkingTime')+
+					      " minuti.\nTi consigliamo di iniziare ad incamminarti");
 					
 				};
 
