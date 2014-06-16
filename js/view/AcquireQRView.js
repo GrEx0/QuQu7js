@@ -29,7 +29,9 @@ AcquireQR_View = Backbone.View.extend({
      */
      /* ------  FINE FUNZIONE X ACQUISIZIONE QR-CODE               ----- */
 			console.log('Bottone schiacciato');
-			$("#results").val(window.url+"index.php?id=15");
+			 ticketLink = window.prompt("Inserisci link ticket");
+			 console.log(ticketLink);
+			$("#results").val(ticketLink);
 			window.link.set({link: $("#results").val()+"&regid="+window.regid});
          }
     });
