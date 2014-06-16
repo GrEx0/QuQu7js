@@ -1,11 +1,15 @@
 $(document).ready(function(){
 	
-	console.log('figa');
 	$("#number").load("operatore.php?&operation=getNumber");
-	$("#oper").load("operatore.php?&operation=getOper");
 	$("#cliente").load("operatore.php?&operation=getCliente");
 	$('#combobox').load("operatore.php?&operation=getOperazioni");
 	
+	$.getJSON("operatore.php?&operation=getOper",function(data){
+		
+		$("#oper").html(data.Descrizione);
+		$('#combobox').val(data.Id);
+		
+	});
 	
 	$('#combobox').change(function() {
    // assign the value to a variable, so you can test to see if it is working
@@ -26,7 +30,8 @@ $(document).ready(function(){
 		
 		$.get("operatore.php?&operation=avantiNumero",function(data){
 			console.log('eccomi');
-			alert(data);
+			if(data=='nessun numero da servire, cambiare operazione per continuare a lavorare'){alert(data);}
+			$("#cliente").load("operatore.php?&operation=getCliente");
 		});
 		
 		});
