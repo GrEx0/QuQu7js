@@ -2,8 +2,6 @@
 require_once 'config.php';
 
 function db_connect(){
-	
-	
 				// connessione a MySQL con l'estensione MySQLi
 				$mysqli = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE);
 			// verifica dell'avvenuta connessione
