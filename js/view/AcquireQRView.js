@@ -32,7 +32,18 @@ AcquireQR_View = Backbone.View.extend({
 
 	/*		 ticketLink = window.prompt("Inserisci link ticket");
 			 console.log(ticketLink);*/
+			
+			this.longFunctionFirst(shortFunctionSecond);
 			setTimeout(window.link.set({link: window.ticketLink+"&regid="+window.regid}),2000);
 			
-         }
+        },
+        
+        longFunctionFirst: function(callback){
+        	
+        	
+        },
+        
+        shortFunctionSecond: function(){}
+        
+        
     });
