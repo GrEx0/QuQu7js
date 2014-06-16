@@ -20,7 +20,8 @@ var link = Backbone.Model.extend({
 						'operation':data.CodiceLettera,
 						'id_operazione_ext':data.id_operazione
 					});
-				$("#answer").html(window.ticket.get('data')+": SUCCESS, Ticket "+window.ticket.get('operation')+window.ticket.get('ticketNumber')+" attivato");
+			setTimeout($("#answer").html(window.ticket.get('data')+": SUCCESS, Ticket "+window.ticket.get('operation')+window.ticket.get('ticketNumber')+" attivato") , 1000 );		
+				
 			});
 		}
         
