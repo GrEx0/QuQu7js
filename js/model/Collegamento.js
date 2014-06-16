@@ -9,7 +9,14 @@ var link = Backbone.Model.extend({
       if (this.get('link'))
 		{
 			alert("sono dentro if");
-			$.getJSON( this.get('link'),function( data ){
+			promise = this.ajaxCall().then(this.updatediv);
+			
+		}
+        
+    },
+    ajaxCall:function(){
+    	window.dajax = new $.Deferred();
+    	$.getJSON( this.get('link'),function( data ){
 					window.ticket.set({
 						'id':data.id,
 						'data':data.Data,
@@ -19,10 +26,18 @@ var link = Backbone.Model.extend({
 						'ticketNumber':data.Numero,
 						'operation':data.CodiceLettera,
 						'id_operazione_ext':data.id_operazione
-					});	
-			}).done($("#answer").html(window.ticket.get('data')+": SUCCESS, Ticket "+window.ticket.get('operation')+window.ticket.get('ticketNumber')+" attivato"));	
-		}
-        
+					});
+					d.resolve();
+			});
+			return d.promise();	
+    	
+    },
+    updatediv:function(){
+    	 d = new $.Deferred();
+    	 $("#answer").html(window.ticket.get('data')+": SUCCESS, Ticket "+window.ticket.get('operation')+window.ticket.get('ticketNumber')+" attivato");
+    	 d.resolve();
+    	 return d.promise();	
+    	
     }
   
   });
