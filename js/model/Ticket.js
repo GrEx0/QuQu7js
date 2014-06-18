@@ -81,7 +81,11 @@ Ticket = Backbone.Model.extend({
              }
              ,
            
-           function() {alert('Error getting location');}
+           function() {alert('Error getting location');} //getPositionError
+           
+           ,
+           
+          { enableHighAccuracy: true}    //getPositionOptions
            
            ); //fine stima percorso
           }
