@@ -44,7 +44,7 @@ Ticket = Backbone.Model.extend({
 				if(parseInt(window.ticket.get('waitingTime'))<=2+parseInt(window.ticket.get('walkingTime'))){
 					
 					alert("tra circa "+window.ticket.get('waitingTime')+
-					      " minuti è il tuo tuno.\nLa distanza dal centro è circa "+window.ticket.get('walkingTime')+
+					      " minuti è il tuo tuno.\nLa tua distanza dal centro è circa "+window.ticket.get('walkingTime')+
 					      " minuti.\nTi consigliamo di iniziare ad incamminarti");
 					
 				};
@@ -70,14 +70,14 @@ Ticket = Backbone.Model.extend({
 	+"&destination="+window.ticket.get('centerPosition')
     +"&mode=walking&sensor=true&key=AIzaSyC1U94HTYNNSUpJHot6_bBRIT-C0aGVE-Q";
     
-    alert(mapurl);
+    //alert(mapurl);
     
     
         	$.getJSON(mapurl
         		,
 			
 			function(response){
-				alert(response);
+				//alert(response);
             window.ticket.set({walkingTime:Math.round((response.routes[0].legs[0].duration.value)/60)});
             });
             
@@ -88,7 +88,7 @@ Ticket = Backbone.Model.extend({
            
            ,
            
-          { enableHighAccuracy: true}    //getPositionOptions
+          { enableHighAccuracy: true, timeout: 4000}    //getPositionOptions
            
            ); //fine stima percorso
           }
