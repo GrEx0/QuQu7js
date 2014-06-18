@@ -67,8 +67,8 @@ Ticket = Backbone.Model.extend({
             	//alert(position.coords.latitude + ',' + position.coords.longitude);
 
 	var mapurl="https://maps.googleapis.com/maps/api/directions/json?origin="+position.coords.latitude+","+position.coords.longitude
-	+"%26destination="+window.ticket.get('centerPosition')
-    +"%26mode=walking%26sensor=false%26key=AIzaSyC1U94HTYNNSUpJHot6_bBRIT-C0aGVE-Q";
+	+"&destination="+window.ticket.get('centerPosition')
+    +"&mode=walking&sensor=true&key=AIzaSyC1U94HTYNNSUpJHot6_bBRIT-C0aGVE-Q";
     
     alert(mapurl);
     
@@ -77,6 +77,7 @@ Ticket = Backbone.Model.extend({
         		,
 			
 			function(response){
+				alert(response);
             window.ticket.set({walkingTime:Math.round((response.routes[0].legs[0].duration.value)/60)});
             });
             
