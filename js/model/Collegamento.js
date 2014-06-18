@@ -5,11 +5,11 @@ var link = Backbone.Model.extend({
     },
  
     attributesChanged: function(){
-    	alert("1");
+    	//alert("1");
       if (this.get('link'))
 		{
 
-			alert("sono dentro if");
+		//	alert("sono dentro if");
 			promise = this.ajaxCall().then(this.updatediv);
 			
 		}
@@ -36,7 +36,7 @@ var link = Backbone.Model.extend({
     },
     updatediv:function(){
     	 d = new $.Deferred();
-    	 $("#answer").html(window.ticket.get('data')+": SUCCESS, Ticket "+window.ticket.get('operation')+window.ticket.get('ticketNumber')+" attivato");
+    	 $("#answer").html(window.ticket.get('data')+": SUCCESS, Ticket attivato");
     	 d.resolve();
     	 return d.promise();	
     	

@@ -55,6 +55,8 @@ Ticket = Backbone.Model.extend({
         routeCalc: function(){
   
           	 	//stima percorso
+          	 	
+          	 	alert ("dentroRouteCalc");
 
              navigator.geolocation.getCurrentPosition(
  
