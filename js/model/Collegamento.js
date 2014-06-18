@@ -5,11 +5,11 @@ var link = Backbone.Model.extend({
     },
  
     attributesChanged: function(){
-    	//alert("1");
+    	alert("link rilevato dal modello");
       if (this.get('link'))
 		{
 
-		//	alert("sono dentro if");
+			alert("sono dentro if");
 			promise = this.ajaxCall().then(this.updatediv);
 			
 		}
@@ -18,7 +18,7 @@ var link = Backbone.Model.extend({
     ajaxCall:function(){
     	window.dajax = new $.Deferred();
     	$.getJSON( this.get('link'),function( data ){
-
+                
 					window.ticket.set({
 						'id':data.id,
 						'data':data.Data,

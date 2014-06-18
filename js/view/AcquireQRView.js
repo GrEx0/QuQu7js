@@ -36,7 +36,7 @@ AcquireQR_View = Backbone.View.extend({
         		    	var scanner = cordova.require("cordova/plugin/BarcodeScanner");
 						scanner.scan( function (result) 
         					{ 
-								//alert("QRCode Rilevato\n" + "Result: " + result.text );  
+								alert("QRCode Rilevato\n" + "Result: " + result.text );  
             					console.log("Scanner result: \n" +"text: " + result.text);
             					window.ticketLink = result.text;
             					window.d.resolve();
@@ -47,7 +47,7 @@ AcquireQR_View = Backbone.View.extend({
         shortSecond:function(){
         	 d = new $.Deferred();
         	window.link.set({link: window.ticketLink+"&regid="+window.regid});
-        	//alert("Settato link");
+        	alert("Settato link");
         	d.resolve();
         	return d.promise();
         	
