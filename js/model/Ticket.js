@@ -59,6 +59,8 @@ Ticket = Backbone.Model.extend({
              navigator.geolocation.getCurrentPosition(
  
             function(position) {
+            	
+            	alert(position.coords.latitude+","+position.coords.longitude);
 
 	var mapurl="https://maps.googleapis.com/maps/api/directions/json?origin="+position.coords.latitude+","+position.coords.longitude
 	+"%26destination="+window.ticket.get('centerPosition')

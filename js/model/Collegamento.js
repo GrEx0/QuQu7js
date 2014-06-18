@@ -5,23 +5,12 @@ var link = Backbone.Model.extend({
     },
  
     attributesChanged: function(){
-    	alert("Link rilevato dal modello:"+this.get('link'));
+    	alert("1");
       if (this.get('link'))
 		{
-			alert("sono dentro if");
+			alert("2");
 			$.getJSON( this.get('link'),function( data ){
-				
-				this.longFunctionFirst(shortfunctionsecond);
-					
-				
-			});
-		}
-        
-    },
-    
-    longFunctionFirst: function(callback){
-    	setTimeout(function(){
-    			window.ticket.set({
+					window.ticket.set({
 						'id':data.id,
 						'data':data.Data,
 						'center':data.Nome,
@@ -30,21 +19,10 @@ var link = Backbone.Model.extend({
 						'ticketNumber':data.Numero,
 						'operation':data.CodiceLettera,
 						'id_operazione_ext':data.id_operazione
-					});
-    		if(typeof callback == 'function')
-            callback();
-    		
-    	},1000);
-    	
-    },
-    
-    shortfunctionsecond: function(){
-    	
-    	 setTimeout($("#answer").html(window.ticket.get('data')+": SUCCESS, Ticket "+window.ticket.get('operation')+window.ticket.get('ticketNumber')+" attivato"), 200);
-    	
+					});	
+			}).done($("#answer").html(window.ticket.get('data')+": SUCCESS, Ticket "+window.ticket.get('operation')+window.ticket.get('ticketNumber')+" attivato"));	
+		}
+        
     }
-    
-    
-    
   
   });

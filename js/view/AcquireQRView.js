@@ -17,14 +17,9 @@ AcquireQR_View = Backbone.View.extend({
     /* ------ PARTE DI ACQUISIZIONE QR-CODE, DISABILITATA IN DEBUG E TESTING DA PC  ----- */
     
          	console.log('scanning');
-        	var scanner = cordova.require("cordova/plugin/BarcodeScanner");
-			scanner.scan( function (result) 
-        		{ 
-					alert("QRCode Rilevato\n" + "Result: " + result.text );  
-            		console.log("Scanner result: \n" +"text: " + result.text);
-            		window.ticketLink = result.text;
-            		$("#results").html(window.ticketLink); 
-        		});
+         	promise = this.longFirst().then(this.shortSecond);
+
+        		
         	
      
      /* ------  FINE FUNZIONE X ACQUISIZIONE QR-CODE               ----- */
@@ -32,18 +27,30 @@ AcquireQR_View = Backbone.View.extend({
 
 	/*		 ticketLink = window.prompt("Inserisci link ticket");
 			 console.log(ticketLink);*/
+
 			
-			this.longFunctionFirst(shortFunctionSecond);
-			setTimeout(window.link.set({link: window.ticketLink+"&regid="+window.regid}),2000);
 			
+         },
+        longFirst: function(){
+        				window.d = new $.Deferred();
+        		    	var scanner = cordova.require("cordova/plugin/BarcodeScanner");
+						scanner.scan( function (result) 
+        					{ 
+								alert("QRCode Rilevato\n" + "Result: " + result.text );  
+            					console.log("Scanner result: \n" +"text: " + result.text);
+            					window.ticketLink = result.text;
+            					window.d.resolve();
+            					$("#results").html(window.ticketLink); 
+        					});
+        				return window.d.promise();
         },
-        
-        longFunctionFirst: function(callback){
+        shortSecond:function(){
+        	 d = new $.Deferred();
+        	window.link.set({link: window.ticketLink+"&regid="+window.regid});
+        	alert("Settato link");
+        	d.resolve();
+        	return d.promise();
         	
-        	
-        },
-        
-        shortFunctionSecond: function(){}
-        
-        
+        }
+
     });
