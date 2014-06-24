@@ -84,12 +84,27 @@ function onDeviceReady() {
 	try 
 				{ 
                 	pushNotification = window.plugins.pushNotification;
-                	if (device.platform == 'android' || device.platform == 'Android') {
+                	if (device.platform == 'android' || device.platform == 'Android') 
+                	{
 						console.log("registro android");
 						alert("Device Android Registered");
-                    	pushNotification.register(successHandler,errorHandler, {"senderID":"408316694165","ecb":"onNotificationGCM"});		// required!
-					} else {
-                    	pushNotification.register(tokenHandler, errorHandler, {"badge":"true","sound":"true","alert":"true","ecb":"onNotificationAPN"});	// required!
+                    	pushNotification.register(
+                    		successHandler,
+                    		errorHandler, {
+                    			"senderID":"408316694165",
+                    			"ecb":"onNotificationGCM"
+                    		});		// required!
+					} 
+					else 
+					{
+                    	pushNotification.register(
+                    		tokenHandler, 
+                    		errorHandler, {
+                    			"badge":"true",
+                    			"sound":"true",
+                    			"alert":"true",
+                    			"ecb":"onNotificationAPN"
+                    		});	// required!
                 	}
                 }
 				catch(err) 
@@ -97,7 +112,7 @@ function onDeviceReady() {
 					txt="There was an error on this page.\n\n"; 
 					txt+="Error description: " + err.message + "\n\n"; 
 					alert(txt);
-					console.log(txt);
+
 				}
 }
 // handle APNS notifications for iOS
@@ -119,8 +134,7 @@ function onNotificationAPN(e) {
             
             // handle GCM notifications for Android
 function onNotificationGCM(e) {
-                console.log("EVENT RECEIVED"+e.event);
-                
+
                 switch( e.event )
                 {
                     case 'registered':
@@ -128,7 +142,7 @@ function onNotificationGCM(e) {
 					{
 						// Your GCM push server needs to know the regID before it can push to this device
 						// here is where you might want to send it the regID for later use.
-						alert("regID = "+e.regid);
+						//alert("regID = "+e.regid);
 						window.regid = e.regid;
 						
 					}
@@ -137,7 +151,7 @@ function onNotificationGCM(e) {
                     case 'message':
                     	// if this flag is set, this notification happened while we were in the foreground.
                     	// you might want to play a sound to get the user's attention, throw up a dialog, etc.
-                    	alert('message = '+e.message+' msgcnt = '+e.msgcnt);
+                    	alert('message = '+e.payload.message+' msgcnt = '+e.payload.msgcnt);
                     	if (e.foreground)
                     	{
 							console.log("INLINE NOTIFICATION");
@@ -153,12 +167,10 @@ function onNotificationGCM(e) {
 							else
 							console.log("BACKGROUND NOTIFICATION");
 						}
-							
-					console.log('MESSAGE -> MSG: ' + e.payload.message + '\n');
+
                     break;
                     
                     case 'error':
-						console.log('ERROR -> MSG:' + e.msg + '\n');
 						alert('GCM error = '+e.msg);
                     break;
                     
