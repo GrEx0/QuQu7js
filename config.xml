@@ -26,11 +26,10 @@
     <gap:plugin name="org.apache.cordova.device" version="0.2.3" />
     
  
-    
-    <!-- Includo le schermate splash  -->
-    <gap:splash src="res/screen/ios/screen-iphone-portrait.png"         gap:platform="ios"     width="320" height="480" />
-    <gap:splash src="res/screen/ios/screen-iphone-portrait-2x.png"      gap:platform="ios"     width="640" height="960" />
-    <gap:splash src="res/screen/ios/screen-iphone-portrait-568h-2x.png" gap:platform="ios"     width="640" height="1136" />
-    <gap:splash src="res/screen/ios/screen-ipad-portrait.png"           gap:platform="ios"     width="768" height="1024" />
-    <gap:splash src="res/screen/ios/screen-ipad-landscape.png"          gap:platform="ios"     width="1024" height="768" />
+    <!-- grafica -->
+    <icon src="icon.png" />
+	<icon src="img\drawable-mdpi\ic_launcher.png" gap:platform="android" gap:qualifier="mdpi" />
+	<icon src="img\drawable-hdpi\ic_launcher.png" gap:platform="android" gap:qualifier="hdpi" />
+	<icon src="img\drawable-xhdpi\ic_launcher.png" gap:platform="android" gap:qualifier="xhdpi" />
+	<icon src="img\drawable-xxhdpi\ic_launcher.png" gap:platform="android" gap:qualifier="xxhdpi" />
 </widget>
