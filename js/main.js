@@ -87,7 +87,7 @@ function onDeviceReady() {
                 	if (device.platform == 'android' || device.platform == 'Android') 
                 	{
 						console.log("registro android");
-						alert("Device Android Registered");
+						//alert("Device Android Registered");
                     	pushNotification.register(
                     		successHandler,
                     		errorHandler, {
