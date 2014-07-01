@@ -46,7 +46,12 @@ Ticket = Backbone.Model.extend({
 					alert("tra circa "+window.ticket.get('waitingTime')+
 					      " minuti è il tuo tuno.\nLa tua distanza dal centro è circa "+window.ticket.get('walkingTime')+
 					      " minuti.\nTi consigliamo di iniziare ad incamminarti");
-					
+					 //notifications     
+					navigator.notification.alert("tra circa "+window.ticket.get('waitingTime')+
+					      " minuti è il tuo tuno.\nLa tua distanza dal centro è circa "+window.ticket.get('walkingTime')+
+					      " minuti.\nTi consigliamo di iniziare ad incamminarti", alertDismissed);
+					navigator.notification.beep(5);
+					navigator.notification.vibrate(500);
 				};
 
          } else {clearInterval(window.idtimer);}	        	
