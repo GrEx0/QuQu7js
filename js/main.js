@@ -151,7 +151,7 @@ function onNotificationGCM(e) {
                     case 'message':
                     	// if this flag is set, this notification happened while we were in the foreground.
                     	// you might want to play a sound to get the user's attention, throw up a dialog, etc.
-                    	alert('message = '+e.message+' msgcnt = '+e.msgcnt);
+                    	alert(e.message);
                     	if (e.foreground)
                     	{
 							console.log("INLINE NOTIFICATION");
