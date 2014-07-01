@@ -120,6 +120,7 @@ function onNotificationAPN(e) {
                 if (e.alert) {
                      console.log(e.alert);
                      navigator.notification.alert(e.alert);
+                     
                 }
                     
                 if (e.sound) {
@@ -157,7 +158,7 @@ function onNotificationGCM(e) {
 							console.log("INLINE NOTIFICATION");
 							
 							// if the notification contains a soundname, play it.
-							var my_media = new Media("/android_asset/www/"+e.soundname);
+							var my_media = new Media("../android_asset/www/"+e.soundname);
 							my_media.play();
 						}
 						else
