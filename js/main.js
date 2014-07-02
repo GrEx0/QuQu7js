@@ -158,7 +158,20 @@ function onNotificationGCM(e) {
                     	//alert(e.message);
                     	navigator.notification.alert(e.message, function(){},'Notifica');
                     	
-                    	
+                    	if (e.message == "Turno terminato")
+                    	{
+                    		window.ticket.set({
+									"id":"",
+       								"data":"",
+        							"center":"N/D",
+        							"centerPosition":"N/D",
+        							"ticketNumber":"N/D",
+        							"operation":"",
+        							"id_operazione_ext":"",
+        							"waitingTime":"N/D",
+        							"walkingTime":"N/D"
+							});
+                    	}
                     	if (e.foreground)
                     	{
 							console.log("INLINE NOTIFICATION");
@@ -179,6 +192,10 @@ function onNotificationGCM(e) {
                     
                     case 'error':
 						alert('GCM error = '+e.msg);
+                    break;
+                    
+                    case 'updateTime':
+                    	navigator.notification.alert(e.valore, function(){},'Aggornamento');
                     break;
                     
                     default:

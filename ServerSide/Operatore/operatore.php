@@ -1,5 +1,6 @@
 <?php
-		require_once(realpath('../operations.php'));	
+		require_once(realpath('../operations.php'));
+		require_once '../GCM.php';	
 		
 		//dichiarazione invariabili
 		$idCentro=8;
@@ -117,15 +118,33 @@
 			$query="SELECT sportelli.Id_ticketCurr_ext FROM sportelli WHERE sportelli.Id=$idSportello";
 			$result = $db->query($query);
 			$record = $result->fetch_array(MYSQLI_ASSOC);
-			
+			$idServito = $record['Id_ticketCurr_ext'];
+			//echo("id servito:".$idServito);
 			//se lo sportello stava servendo 
 			
-			if($record['Id_ticketCurr_ext']!=NULL){
+			if($idServito!=NULL){
 				
+				$query = "SELECT regid FROM utentiattivi WHERE utentiattivi.Id_Ticket_ext =".$idServito;
+				echo($query);
+				$result= $db->query($query);
 				$record = $result->fetch_array(MYSQLI_ASSOC);
-				$idServito = $record['Id_ticketCurr_ext'];
+				if ($record['regid']<>'')
+				{
+						
+					//echo("<br> sono dentro messaggio");
+					$gcm = new GCM();
+					$reg_ids = array($record['regid']);
+					//echo($reg_ids);
+					$message = array( 'message' => "Turno terminato");
+					$gcm->send_notification($reg_ids,$message);
+					$query = "DELETE FROM utentiattivi WHERE Id_Ticket_ext=$idServito";
+					$result= $db->query($query);
+				}
+				
+				
 	     		$query="UPDATE ticket SET ticket.OraFine='$ora' WHERE ticket.Id=$idServito";
 				$result= $db->query($query);
+				
 			}
 			
 			//controllo se ci sono prossimi numeri da chiamare
