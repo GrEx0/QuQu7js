@@ -25,7 +25,7 @@
     <gap:plugin name="org.apache.cordova.geolocation" version="0.3.7" />
     <gap:plugin name="org.apache.cordova.device" version="0.2.3" />
     <gap:plugin name="org.apache.cordova.media" version="0.2.3" />
-    <gap:plugin name="org.apache.cordova.Notification"/>
+    <gap:plugin name="org.apache.cordova.dialogs" version="0.2.6" />
     
  
     <!-- grafica -->
