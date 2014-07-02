@@ -13,7 +13,9 @@
 					 				InsertUser($_GET["id"],$_GET["regid"],$db);
 									echo(json_encode($answer));
 									$gcm = new GCM();
-									$gcm->send_notification($_GET["regid"], "Notifica push - Utente inserito nel server");
+									$reg_ids = array($_GET["regid"]);
+									$message = array( 'message' => "Notifica push - Utente inserito nel server",'soundname'=>'beep.wav');
+									$gcm->send_notification($reg_ids,$message);
 					 			 	}
 				    } 	
 					else { echo("errore");}
