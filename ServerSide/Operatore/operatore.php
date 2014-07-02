@@ -118,24 +118,23 @@
 			$query="SELECT sportelli.Id_ticketCurr_ext FROM sportelli WHERE sportelli.Id=$idSportello";
 			$result = $db->query($query);
 			$record = $result->fetch_array(MYSQLI_ASSOC);
-			
+			$idServito = $record['Id_ticketCurr_ext'];
+			//echo("id servito:".$idServito);
 			//se lo sportello stava servendo 
 			
-			if($record['Id_ticketCurr_ext']!=NULL){
+			if($idServito!=NULL){
 				
-				$record = $result->fetch_array(MYSQLI_ASSOC);
-				$idServito = $record['Id_ticketCurr_ext'];
-				
-				$query = "SELECT regid FROM utentiattivi WHERE utentiattivi.Id_Ticket_ext = $idServito";
+				$query = "SELECT regid FROM utentiattivi WHERE utentiattivi.Id_Ticket_ext =".$idServito;
 				echo($query);
 				$result= $db->query($query);
-				if ($result)
+				$record = $result->fetch_array(MYSQLI_ASSOC);
+				if ($record['regid']<>'')
 				{
-					$record = $result->fetch_array(MYSQLI_ASSOC);	
-					echo("<br> sono dentro messaggio");
+						
+					//echo("<br> sono dentro messaggio");
 					$gcm = new GCM();
 					$reg_ids = array($record['regid']);
-					echo($reg_ids);
+					//echo($reg_ids);
 					$message = array( 'message' => "Turno terminato");
 					$gcm->send_notification($reg_ids,$message);
 					$query = "DELETE FROM utentiattivi WHERE Id_Ticket_ext=$idServito";
