@@ -43,7 +43,7 @@ Ticket = Backbone.Model.extend({
 		 	
 		 
 		 	
-		if(window.threeminutes>0){window.threeminutes=window.threeminutes-1;} //contatore per i 3 minuti
+		
 		 	
 		if (window.ticket.get('waitingTime') == 0){
 			
@@ -56,6 +56,7 @@ Ticket = Backbone.Model.extend({
 			
         	//update waiting time
 				window.ticket.set({waitingTime:parseInt(window.ticket.get('waitingTime')-1)}); 
+				if(window.threeminutes>0){window.threeminutes=window.threeminutes-1;} //contatore per i 3 minuti
 				window.ticket.routeCalc();
 
 				//alert
