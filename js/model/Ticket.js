@@ -34,6 +34,12 @@ Ticket = Backbone.Model.extend({
 		},
 
 		 update: function(){
+		 	
+		if (window.ticket.get('waitingTime') == 0){
+			
+			window.ticket.routeCalc();
+			
+		}
 
 		if (window.ticket.get('waitingTime') > 1) {
         	//update waiting time
