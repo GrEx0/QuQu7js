@@ -12,6 +12,12 @@ Ticket = Backbone.Model.extend({
     },
 	 initialize: function(){
       this.bind("change", this.attributesChanged);
+      
+      	
+		 	window.threeminutes=0;
+		 	window.neveragain=0;
+      
+      
     },
 	 attributesChanged: function()
 		{
@@ -35,13 +41,19 @@ Ticket = Backbone.Model.extend({
 
 		 update: function(){
 		 	
+		 
+		 	
+		if(window.threeminutes>0){window.threeminutes=window.threeminutes-1;} //contatore per i 3 minuti
+		 	
 		if (window.ticket.get('waitingTime') == 0){
 			
 			window.ticket.routeCalc();
 			
 		}
 
-		if (window.ticket.get('waitingTime') > 1) {
+		if ( (window.ticket.get('waitingTime') > 1) & window.threeminutes==0 & window.neveragain==0) {
+			
+			
         	//update waiting time
 				window.ticket.set({waitingTime:parseInt(window.ticket.get('waitingTime')-1)}); 
 				window.ticket.routeCalc();
@@ -49,9 +61,24 @@ Ticket = Backbone.Model.extend({
 				//alert
 				if(parseInt(window.ticket.get('waitingTime'))<=2+parseInt(window.ticket.get('walkingTime'))){
 					
-					alert("tra circa "+window.ticket.get('waitingTime')+
+					/*alert("tra circa "+window.ticket.get('waitingTime')+
 					      " minuti è il tuo tuno.\nLa tua distanza dal centro è circa "+window.ticket.get('walkingTime')+
-					      " minuti.\nTi consigliamo di iniziare ad incamminarti");
+					      " minuti.\nTi consigliamo di iniziare ad incamminarti");*/
+					      
+					navigator.notification.prompt("tra circa "+window.ticket.get('waitingTime')+
+					      " minuti è il tuo tuno.\nLa tua distanza dal centro è circa "+window.ticket.get('walkingTime')+
+					      " minuti.\nTi consigliamo di iniziare ad incamminarti",
+					      
+					      function(result){
+					      	if (result.buttonIndex==2){window.threeminutes=3;}
+					      	if (result.buttonIndex==3){window.neveragain=5;}					      	
+					      	
+					      	
+					      }
+					      
+				
+					      
+					      , "ehi baby", ["ricordamelo ogni minuto","ricordamelo ogni 5 minuti","non mostrare più questo messaggio"]);
 					
 				};
 
