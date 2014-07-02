@@ -154,9 +154,7 @@ function onNotificationGCM(e) {
                     	// you might want to play a sound to get the user's attention, throw up a dialog, etc.
                     	var my_media = new Media("/android_asset/www/beep.wav");
 						my_media.play();
-                    	//alert(e.message);
-                    	navigator.notification.vibrate(1000);
-                    	navigator.notification.alert(e.message,'Notifica','Done');
+                    	alert(e.message);
                     	if (e.foreground)
                     	{
 							console.log("INLINE NOTIFICATION");
