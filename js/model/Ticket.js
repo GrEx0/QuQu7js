@@ -51,7 +51,7 @@ Ticket = Backbone.Model.extend({
 			
 		}
 
-		if ( window.ticket.get('waitingTime') > 1) {
+		if ( window.ticket.get('waitingTime') > 0) {
 			
 			
         	//update waiting time
@@ -67,17 +67,17 @@ Ticket = Backbone.Model.extend({
 					navigator.notification.confirm(
 						  "tra circa "+window.ticket.get('waitingTime')+
 					      " minuti è il tuo tuno.\nLa tua distanza dal centro è circa "+window.ticket.get('walkingTime')+
-					      " minuti.\nTi consigliamo di iniziare ad incamminarti",//message
+					      " minuti.\nTi consigliamo di iniziare ad incamminarti. \nVuoi ricevere una notifica sull'aggiornamento ogni 2 minuti ?",//message
 					      
 					      function(result){
-					      	if (result.buttonIndex==2){window.threeminutes=3;}
-					      	if (result.buttonIndex==3){window.neveragain=5;}					      	
+					  
+					      	if (result==2){window.neveragain=5;}					      	
 					      	
 					      },//callback
 					      
-					      "ehi baby",//title
+					      "Ehi !",//title
 					      
-					      ["ricordamelo ogni minuto","ricordamelo ogni 5 minuti","non mostrare più questo messaggio"]//buttonslabel
+					      ["si","no"]//buttonslabel
 					      )
 					;}
 					
