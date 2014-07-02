@@ -152,9 +152,13 @@ function onNotificationGCM(e) {
                     case 'message':
                     	// if this flag is set, this notification happened while we were in the foreground.
                     	// you might want to play a sound to get the user's attention, throw up a dialog, etc.
+                    	navigator.notification.vibrate(500);
                     	var my_media = new Media("/android_asset/www/beep.wav");
 						my_media.play();
-                    	alert(e.message);
+                    	//alert(e.message);
+                    	navigator.notification.alert(e.message, function(){},'Notifica');
+                    	
+                    	
                     	if (e.foreground)
                     	{
 							console.log("INLINE NOTIFICATION");
