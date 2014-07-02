@@ -195,7 +195,10 @@ function onNotificationGCM(e) {
                     break;
                     
                     case 'updateTime':
-                    	navigator.notification.alert(e.valore, function(){},'Aggornamento');
+                    	navigator.notification.alert(e.updateTime,function(){},'Aggiornamento');
+                    	window.ticket.set({
+                    		"waitingTime":e.waitingTime
+                    	});
                     break;
                     
                     default:

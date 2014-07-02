@@ -115,14 +115,19 @@
 		
 		    //controllo se lo sportello non sta servendo 
 		    
-			$query="SELECT sportelli.Id_ticketCurr_ext FROM sportelli WHERE sportelli.Id=$idSportello";
+			$query="SELECT sportelli.Id_ticketCurr_ext,sportelli.Id_operazione_ext FROM sportelli WHERE sportelli.Id=$idSportello";
 			$result = $db->query($query);
 			$record = $result->fetch_array(MYSQLI_ASSOC);
 			$idServito = $record['Id_ticketCurr_ext'];
+			$idOperazione = $record['Id_operazione_ext'];
 			//echo("id servito:".$idServito);
 			//se lo sportello stava servendo 
 			
 			if($idServito!=NULL){
+				
+				// Cerco se il ticket appena servito aveva ququ7 
+				// in caso affermativo cancello il record da utenti attivi e gli mando una notifica
+				// azzerando window.ticket nel telefono 
 				
 				$query = "SELECT regid FROM utentiattivi WHERE utentiattivi.Id_Ticket_ext =".$idServito;
 				echo($query);
@@ -141,12 +146,21 @@
 					$result= $db->query($query);
 				}
 				
+		// ------------ Aggiornamento del tempo di attesa degli utenti
+			$query = "SELECT utentiattivi.regid,ticket.Id FROM utentiattivi,ticket WHERE ticket.id=utentiattivi.Id_Ticket_ext AND ticket.Id_operazione_ext=".$idOperazione;
+			$result= $db->query($query);	
+			while ($row = mysqli_fetch_assoc($result)) {
+					CalcolaNuovaStima($row['regid'],$row['Id'],$idOperazione,$db);
+						
+			}
+		//--------------------------------------------------------------------------------------------
 				
 	     		$query="UPDATE ticket SET ticket.OraFine='$ora' WHERE ticket.Id=$idServito";
 				$result= $db->query($query);
 				
 			}
 			
+			// --------------------------- CHIAMATA NUMERO SUCCESSIVO ---------------
 			//controllo se ci sono prossimi numeri da chiamare
 			
 			$query= "SELECT MIN(ticket.Id) as Id_ticket
@@ -187,5 +201,48 @@
  }
  
  }
+
+function CalcolaNuovaStima($regid,$ticket_id,$idOperazione,$db){
+			// GUARDO GUANTE PERSONE SONO DAVANTI ALL'UTENTE
+			$query = "SELECT ticket.Numero,ticket.Data FROM ticket WHERE ticket.id=".$ticket_id;
+			$result= $db->query($query);
+			$LuckyNumber = $result->fetch_array(MYSQLI_ASSOC);
+			$query = "SELECT COUNT(ticket.id) as Totale FROM ticket WHERE Orafine ='00:00:00' AND ticket.Data='".$LuckyNumber['Data']."' and ticket.Numero<".$LuckyNumber['Numero']." and Id_operazione_ext =".$idOperazione;
+			$result= $db->query($query);
+			// PeopleWaiting = numero di persone davanti all'user
+			$PeopleWaiting = $result->fetch_array(MYSQLI_ASSOC);
+			//echo("Persone davanti:".$PeopleWaiting['Totale']."<br>");
+
+			$query = "SELECT ticket.id_centro_ext FROM ticket WHERE ticket.id=".$ticket_id;
+			$result= $db->query($query);
+			// Id del centro
+			$id_centro = $result->fetch_array(MYSQLI_ASSOC);
+
+			$query = "SELECT AVG(MINUTE(TIMEDIFF(ticket.OraFine,ticket.OraChiamata))) as ServingTime
+ 				      FROM ticket WHERE id_operazione_ext =".$idOperazione." and ticket.Id_centro_ext=".$id_centro['id_centro_ext']." AND(ticket.OraChiamata<>'00:00:00')";
+		    $result= $db->query($query);
+			// Tempo medio di servizio
+			$ServingTime = $result->fetch_array(MYSQLI_ASSOC);
+			//echo("Tempo medio servizio:".$ServingTime['ServingTime']."<br>");
+
+			// Numero di sportelli attivi per quell'operazione
+			$query = "SELECT COUNT(sportelli.Id) as NumeroSportelli
+					  FROM sportelli
+					  WHERE sportelli.Id_Centro_ext =".$id_centro['id_centro_ext']." AND sportelli.Id_operazione_ext=".$idOperazione;
+			$result= $db->query($query);
+			$N = $result->fetch_array(MYSQLI_ASSOC);
+			//echo("Numero Sportelli:".$N['NumeroSportelli']."<br>");
+
+			$waitingTime = ($ServingTime['ServingTime'] * $PeopleWaiting['Totale'])/ $N['NumeroSportelli'];
+			//echo("tempo di attesa:".$waitingTime);
+			echo("nuova stima".$waitingTime);
+			$gcm = new GCM();
+			$reg_ids = array($regid);
+					//echo($reg_ids);
+			$message = array( 'updateTime' => "Tempo aggiornato",'waitingTime' =>$waitingTime);
+			$gcm->send_notification($reg_ids,$message);
+			
+	
+}
 
 ?>
