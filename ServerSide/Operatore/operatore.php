@@ -1,5 +1,6 @@
 <?php
-		require_once(realpath('../operations.php'));	
+		require_once(realpath('../operations.php'));
+		require_once '../GCM.php';	
 		
 		//dichiarazione invariabili
 		$idCentro=8;
@@ -124,8 +125,27 @@
 				
 				$record = $result->fetch_array(MYSQLI_ASSOC);
 				$idServito = $record['Id_ticketCurr_ext'];
+				
+				$query = "SELECT regid FROM utentiattivi WHERE utentiattivi.Id_Ticket_ext = $idServito";
+				echo($query);
+				$result= $db->query($query);
+				if ($result)
+				{
+					$record = $result->fetch_array(MYSQLI_ASSOC);	
+					echo("<br> sono dentro messaggio");
+					$gcm = new GCM();
+					$reg_ids = array($record['regid']);
+					echo($reg_ids);
+					$message = array( 'message' => "Turno terminato");
+					$gcm->send_notification($reg_ids,$message);
+					$query = "DELETE FROM utentiattivi WHERE Id_Ticket_ext=$idServito";
+					$result= $db->query($query);
+				}
+				
+				
 	     		$query="UPDATE ticket SET ticket.OraFine='$ora' WHERE ticket.Id=$idServito";
 				$result= $db->query($query);
+				
 			}
 			
 			//controllo se ci sono prossimi numeri da chiamare
