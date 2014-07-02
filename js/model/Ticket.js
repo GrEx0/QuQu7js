@@ -51,7 +51,7 @@ Ticket = Backbone.Model.extend({
 			
 		}
 
-		if ( (window.ticket.get('waitingTime') > 1) & window.threeminutes==0 & window.neveragain==0) {
+		if ( window.ticket.get('waitingTime') > 1) {
 			
 			
         	//update waiting time
@@ -61,24 +61,24 @@ Ticket = Backbone.Model.extend({
 				//alert
 				if(parseInt(window.ticket.get('waitingTime'))<=2+parseInt(window.ticket.get('walkingTime'))){
 					
-					/*alert("tra circa "+window.ticket.get('waitingTime')+
+					
+					if(window.threeminutes==0 & window.neveragain==0){      
+					navigator.notification.confirm(
+						  "tra circa "+window.ticket.get('waitingTime')+
 					      " minuti è il tuo tuno.\nLa tua distanza dal centro è circa "+window.ticket.get('walkingTime')+
-					      " minuti.\nTi consigliamo di iniziare ad incamminarti");*/
-					      
-					navigator.notification.prompt("tra circa "+window.ticket.get('waitingTime')+
-					      " minuti è il tuo tuno.\nLa tua distanza dal centro è circa "+window.ticket.get('walkingTime')+
-					      " minuti.\nTi consigliamo di iniziare ad incamminarti",
+					      " minuti.\nTi consigliamo di iniziare ad incamminarti",//message
 					      
 					      function(result){
 					      	if (result.buttonIndex==2){window.threeminutes=3;}
 					      	if (result.buttonIndex==3){window.neveragain=5;}					      	
 					      	
-					      	
-					      }
+					      },//callback
 					      
-				
+					      "ehi baby",//title
 					      
-					      , "ehi baby", ["ricordamelo ogni minuto","ricordamelo ogni 5 minuti","non mostrare più questo messaggio"]);
+					      ["ricordamelo ogni minuto","ricordamelo ogni 5 minuti","non mostrare più questo messaggio"]//buttonslabel
+					      )
+					;}
 					
 				};
 
