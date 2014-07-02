@@ -155,7 +155,8 @@ function onNotificationGCM(e) {
                     	navigator.notification.vibrate(10);
                     	var my_media = new Media("/android_asset/www/beep.wav");
 						my_media.play();
-                    	alert(e.message);
+                    	//alert(e.message);
+                    	navigator.notification.confirm(e.message);
                     	if (e.foreground)
                     	{
 							console.log("INLINE NOTIFICATION");
