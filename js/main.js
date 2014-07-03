@@ -188,6 +188,9 @@ function onNotificationGCM(e) {
                     				navigator.notification.alert(e.message, function(){},'Notifica');
                     			break;
                     			
+                    			default:
+                    				navigator.notification.alert(e.message, function(){},'Notifica');
+
                     		}	
 
 
