@@ -14,8 +14,9 @@ Ticket = Backbone.Model.extend({
       this.bind("change", this.attributesChanged);
       
       	
-		 	window.threeminutes=0;
+		 	
 		 	window.neveragain=0;
+		 	window.count=0;
       
       
     },
@@ -41,29 +42,22 @@ Ticket = Backbone.Model.extend({
 
 		 update: function(){
 		 	
-		 
-		 	
-		
-		 	
-		if (window.ticket.get('waitingTime') == 0){
-			
-			window.ticket.routeCalc();
-			
-		}
 
-		if ( window.ticket.get('waitingTime') > 0) {
+		if ( window.ticket.get('waitingTime') >= 0) {
 			
 			
         	//update waiting time
+        	if(window.ticket.get('waitingTime') > 0){
 				window.ticket.set({waitingTime:parseInt(window.ticket.get('waitingTime')-1)}); 
-				if(window.threeminutes>0){window.threeminutes=window.threeminutes-1;} //contatore per i 3 minuti
+				}
+				window.count=window.count+1;
 				window.ticket.routeCalc();
 
-				//alert
+				//notification
 				if(parseInt(window.ticket.get('waitingTime'))<=2+parseInt(window.ticket.get('walkingTime'))){
 					
 					
-					if(window.threeminutes==0 & window.neveragain==0){      
+					if(window.neveragain==0 & window.count%2==0){       //notifica ogni 2 minuti
 					navigator.notification.confirm(
 						  "tra circa "+window.ticket.get('waitingTime')+
 					      " minuti è il tuo tuno.\nLa tua distanza dal centro è circa "+window.ticket.get('walkingTime')+
@@ -71,19 +65,19 @@ Ticket = Backbone.Model.extend({
 					      
 					      function(result){
 					  
-					      	if (result==2){window.neveragain=5;}					      	
+					      	if (result==2){window.neveragain=5;}	   //se scegli no notifica mai più				      	
 					      	
 					      },//callback
 					      
 					      "Ehi !",//title
 					      
-					      ["si","no"]//buttonslabel
+					      ["SI","NO"]//buttonslabel
 					      )
 					;}
 					
 				};
 
-         } else {clearInterval(window.idtimer);}	        	
+         } else{alert("ERROR");}        	
        },
        
         routeCalc: function(){
