@@ -116,11 +116,11 @@
 		    //controllo se lo sportello non sta servendo 
 		    
 			$query="SELECT sportelli.Id_ticketCurr_ext,sportelli.Id_operazione_ext FROM sportelli WHERE sportelli.Id=$idSportello";
-			$result = $db->query($query);
-			$record = $result->fetch_array(MYSQLI_ASSOC);
+			$record = EseguiQuery($query, $db);
+			
 			$idServito = $record['Id_ticketCurr_ext'];
 			$idOperazione = $record['Id_operazione_ext'];
-			//echo("id servito:".$idServito);
+
 			//se lo sportello stava servendo 
 			
 			if($idServito!=NULL){
@@ -130,18 +130,14 @@
 				// azzerando window.ticket nel telefono 
 				
 				$query = "SELECT regid FROM utentiattivi WHERE utentiattivi.Id_Ticket_ext =".$idServito;
-				echo($query);
-				$result= $db->query($query);
-				$record = $result->fetch_array(MYSQLI_ASSOC);
+				$record = EseguiQuery($query, $db);
 				if ($record['regid']<>'')
 				{
 						
 					//echo("<br> sono dentro messaggio");
-					$gcm = new GCM();
-					$reg_ids = array($record['regid']);
-					//echo($reg_ids);
-					$message = array( 'message' => "Turno terminato");
-					$gcm->send_notification($reg_ids,$message);
+					
+					InviaPush($record['regid'],"Turno terminato");
+			
 					$query = "DELETE FROM utentiattivi WHERE Id_Ticket_ext=$idServito";
 					$result= $db->query($query);
 				}
@@ -168,20 +164,18 @@
 					 WHERE ticket.Id_operazione_ext=(SELECT sportelli.Id_operazione_ext FROM sportelli WHERE sportelli.Id =$idSportello) 
 					 AND ticket.OraChiamata='00:00:00' AND ticket.Data='$data'";
 			                                   
-			$result=$db->query($query);
-			$prossimo = $result->fetch_array(MYSQLI_ASSOC);
+			$prossimo = EseguiQuery($query, $db);
 			
 			//chiama il prossimo numero
 		
 			if($prossimo['Id_ticket']!=0){
 		    $query = "SELECT regid FROM utentiattivi WHERE Id_Ticket_ext=".$prossimo['Id_ticket'];
-			$result=$db->query($query);
-			$Cell = $result->fetch_array(MYSQLI_ASSOC);
+			
+			$Cell = EseguiQuery($query, $db);
+			
 			if ($Cell['regid'] !='') {
-					$reg_ids = array($Cell['regid']);
-					//echo($reg_ids);
-					$message = array( 'message' => "E' il tuo turno!");
-					$gcm->send_notification($reg_ids,$message);
+
+					InviaPush($Cell['regid'], "E' il tuo turno!");
 				
 			}
 		    $query="UPDATE ticket SET ticket.OraChiamata='$ora' 
@@ -210,6 +204,22 @@
  }
  
  }
+
+function EseguiQuery($query,$db){
+			$result = $db->query($query);
+			$record = $result->fetch_array(MYSQLI_ASSOC);
+			return $record;
+	
+}
+
+function InviaPush($regid,$txtmsg){
+			$gcm = new GCM();
+			$reg_ids = array($regid);
+			//echo($reg_ids);
+			$message = array( 'message' => $txtmsg);
+			$gcm->send_notification($reg_ids,$message);
+			unset($gcm);
+}
 
 function CalcolaNuovaStima($regid,$ticket_id,$idOperazione,$db){
 			// GUARDO GUANTE PERSONE SONO DAVANTI ALL'UTENTE
@@ -244,11 +254,11 @@ function CalcolaNuovaStima($regid,$ticket_id,$idOperazione,$db){
 
 			$waitingTime = ($ServingTime['ServingTime'] * $PeopleWaiting['Totale'])/ $N['NumeroSportelli'];
 			//echo("tempo di attesa:".$waitingTime);
-			echo("nuova stima".$waitingTime);
+			echo("nuova stima ".$waitingTime);
 			$gcm = new GCM();
 			$reg_ids = array($regid);
 					//echo($reg_ids);
-			$message = array( 'updateTime' => "Tempo aggiornato",'waitingTime' =>$waitingTime);
+			$message = array( 'message' => "Tempo aggiornato",'msgcnt' =>$waitingTime);
 			$gcm->send_notification($reg_ids,$message);
 			
 	
