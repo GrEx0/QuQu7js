@@ -156,7 +156,7 @@ function onNotificationGCM(e) {
                     	var my_media = new Media("/android_asset/www/beep.wav");
 						my_media.play();
                     	//alert(e.message);
-                    	navigator.notification.alert(e.message, function(){},'Notifica');
+                    	navigator.notification.alert(e.message+' msgcnt = '+e.msgcnt, function(){},'Notifica');
                     	switch (e.message)
                     		{
                     			case "Turno terminato":
@@ -178,7 +178,7 @@ function onNotificationGCM(e) {
                     			break;
                     			
                     			case "Tempo aggiornato":
-                    				window.ticket.set({"waitingTime":e.waitingTime});
+                    				window.ticket.set({"waitingTime":e.msgcnt});
                     			break;
                     		}
 
