@@ -156,7 +156,7 @@ function onNotificationGCM(e) {
                     	var my_media = new Media("/android_asset/www/beep.wav");
 						my_media.play();
                     	//alert(e.message);
-                    	
+
                     	switch (e.message)
                     		{
                     			case "Turno terminato":
@@ -176,12 +176,15 @@ function onNotificationGCM(e) {
                     			
                     			case "E' il tuo turno!":
                     				clearInterval(window.idtimer);
+                    				window.count = 0;
+                    				navigator.notification.alert(e.message, function(){},'Notifica');
                     			break;
                     			
                     			case "update":
                     				window.ticket.set({"waitingTime":e.soundname});
                     			break;
                     		}
+
 
                     	if (e.foreground)
                     	{
