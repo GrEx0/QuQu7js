@@ -10,7 +10,7 @@
 			if ($db){
 					 	$answer = CheckUser($_GET['id'],$db);
 					 	if ($answer){
-					 				InsertUser($_GET["id"],$_GET["regid"],$db);
+					 				InsertUser($_GET["id"],$_GET["regid"],$db);				// Inserisco l'utente in utenti attivi
 									echo(json_encode($answer));
 									$gcm = new GCM();
 									$reg_ids = array($_GET["regid"]);
