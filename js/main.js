@@ -183,7 +183,11 @@ function onNotificationGCM(e) {
                     			case "update":
                     				window.ticket.set({"waitingTime":e.soundname});
                     			break;
-                    		}
+                    			
+                    			case "Utente inserito nel server":
+                    				navigator.notification.alert(e.message, function(){},'Notifica');
+                    			break;
+                    		}	
 
 
                     	if (e.foreground)

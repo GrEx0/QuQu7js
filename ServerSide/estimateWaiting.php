@@ -40,6 +40,7 @@
 
 			$waitingTime = ($ServingTime['ServingTime'] * $PeopleWaiting['Totale'])/ $N['NumeroSportelli'];
 			//echo("tempo di attesa:".$waitingTime);
+			$waitingTime = round($waitingTime);
 			$answer = array('waitingTime'=>$waitingTime);
 			echo(json_encode($answer));
 		

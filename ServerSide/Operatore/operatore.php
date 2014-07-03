@@ -141,16 +141,7 @@
 					$query = "DELETE FROM utentiattivi WHERE Id_Ticket_ext=$idServito";
 					$result= $db->query($query);
 				}
-				
-		// ------------ Aggiornamento del tempo di attesa degli utenti
-			$query = "SELECT utentiattivi.regid,ticket.Id FROM utentiattivi,ticket WHERE ticket.id=utentiattivi.Id_Ticket_ext AND ticket.Id_operazione_ext=".$idOperazione;
-			$result= $db->query($query);	
-			while ($row = mysqli_fetch_assoc($result)) {
-					CalcolaNuovaStima($row['regid'],$row['Id'],$idOperazione,$db);
-						
-			}
-		//--------------------------------------------------------------------------------------------
-				
+								
 	     		$query="UPDATE ticket SET ticket.OraFine='$ora' WHERE ticket.Id=$idServito";
 				$result= $db->query($query);
 				
@@ -185,6 +176,14 @@
 			$query="UPDATE sportelli SET sportelli.Id_ticketCurr_ext=".$prossimo['Id_ticket']." WHERE sportelli.Id=$idSportello";
 			$result = $db->query($query);
 			
+			// ------------ Aggiornamento del tempo di attesa degli utenti
+			$query = "SELECT utentiattivi.regid,ticket.Id FROM utentiattivi,ticket WHERE ticket.id=utentiattivi.Id_Ticket_ext AND ticket.Id_operazione_ext=".$idOperazione;
+			$result= $db->query($query);	
+			while ($row = mysqli_fetch_assoc($result)) {
+					CalcolaNuovaStima($row['regid'],$row['Id'],$idOperazione,$db);
+						
+			}
+		//--------------------------------------------------------------------------------------------
 			}else{
 					$query="UPDATE sportelli SET sportelli.Id_ticketCurr_ext=NULL WHERE sportelli.Id=$idSportello";
 			        $result = $db->query($query);
@@ -254,6 +253,7 @@ function CalcolaNuovaStima($regid,$ticket_id,$idOperazione,$db){
 
 			$waitingTime = ($ServingTime['ServingTime'] * $PeopleWaiting['Totale'])/ $N['NumeroSportelli'];
 			//echo("tempo di attesa:".$waitingTime);
+			$waitingTime = round($waitingTime);
 			echo("nuova stima ".$waitingTime);
 			$gcm = new GCM();
 			$reg_ids = array($regid);

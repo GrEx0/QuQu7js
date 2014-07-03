@@ -14,7 +14,7 @@
 									echo(json_encode($answer));
 									$gcm = new GCM();
 									$reg_ids = array($_GET["regid"]);
-									$message = array( 'message' => "Utente inserito nel server",'soundname'=>'beep.wav');
+									$message = array( 'message' => "Utente inserito nel server");
 									$gcm->send_notification($reg_ids,$message);
 					 			 	}
 				    } 	
