@@ -157,26 +157,31 @@ function onNotificationGCM(e) {
 						my_media.play();
                     	//alert(e.message);
                     	navigator.notification.alert(e.message, function(){},'Notifica');
-                    	
-                    	if (e.message == "Turno terminato")
-                    	{
-                    		window.ticket.set({
-									"id":"",
-       								"data":"",
-        							"center":"N/D",
-        							"centerPosition":"N/D",
-        							"ticketNumber":"N/D",
-        							"operation":"",
-        							"id_operazione_ext":"",
-        							"waitingTime":"N/D",
-        							"walkingTime":"N/D"
-							});
-                    	}
-                    	if (e.message == "E' il tuo turno!")
-                    	{
-                    		navigator.notification.alert(e.message, function(){},'Notifica');
-                    		clearInterval(window.idtimer);
-                    	}
+                    	switch (e.message)
+                    		{
+                    			case "Turno terminato":
+                    					window.ticket.set({
+											"id":"",
+       										"data":"",
+        									"center":"N/D",
+        									"centerPosition":"N/D",
+        									"ticketNumber":"N/D",
+        									"operation":"",
+        									"id_operazione_ext":"",
+        									"waitingTime":"N/D",
+        									"walkingTime":"N/D"
+										});
+                    			break;
+                    			
+                    			case "E' il tuo turno!":
+                    				clearInterval(window.idtimer);
+                    			break;
+                    			
+                    			case "Tempo aggiornato":
+                    				window.ticket.set({"waitingTime":e.waitingTime});
+                    			break;
+                    		}
+
                     	if (e.foreground)
                     	{
 							console.log("INLINE NOTIFICATION");
@@ -199,12 +204,6 @@ function onNotificationGCM(e) {
 						alert('GCM error = '+e.msg);
                     break;
                     
-                    case 'updateTime':
-                    	navigator.notification.alert(e.updateTime,function(){},'Aggiornamento');
-                    	window.ticket.set({
-                    		"waitingTime":e.waitingTime
-                    	});
-                    break;
                     
                     default:
 						 alert('An unknown GCM event has occurred');
