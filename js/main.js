@@ -171,6 +171,9 @@ function onNotificationGCM(e) {
         							"waitingTime":"N/D",
         							"walkingTime":"N/D"
 							});
+							
+							window.count=0;
+							clearInterval(window.idtimer);
                     	}
                     	if (e.foreground)
                     	{
