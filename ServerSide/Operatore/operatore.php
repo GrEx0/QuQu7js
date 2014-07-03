@@ -174,7 +174,16 @@
 			//chiama il prossimo numero
 		
 			if($prossimo['Id_ticket']!=0){
+		    $query = "SELECT regid FROM utentiattivi WHERE Id_Ticket_ext=".$prossimo['Id_ticket'];
+			$result=$db->query($query);
+			$Cell = $result->fetch_array(MYSQLI_ASSOC);
+			if ($Cell['regid'] !='') {
+					$reg_ids = array($Cell['regid']);
+					//echo($reg_ids);
+					$message = array( 'message' => "E' il tuo turno!");
+					$gcm->send_notification($reg_ids,$message);
 				
+			}
 		    $query="UPDATE ticket SET ticket.OraChiamata='$ora' 
 			         WHERE ticket.Id=".$prossimo['Id_ticket'];
 					 

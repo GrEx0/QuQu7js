@@ -172,6 +172,11 @@ function onNotificationGCM(e) {
         							"walkingTime":"N/D"
 							});
                     	}
+                    	if (e.message == "E' il tuo turno!")
+                    	{
+                    		navigator.notification.alert(e.message, function(){},'Notifica');
+                    		clearInterval(window.idtimer);
+                    	}
                     	if (e.foreground)
                     	{
 							console.log("INLINE NOTIFICATION");
