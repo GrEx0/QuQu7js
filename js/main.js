@@ -187,6 +187,10 @@ function onNotificationGCM(e) {
                     			case "Utente inserito nel server":
                     				navigator.notification.alert(e.message, function(){},'Notifica');
                     			break;
+                    			
+                    			default:
+                    				navigator.notification.alert(e.message, function(){},'Notifica');
+                    			break;
                     		}	
 
 
