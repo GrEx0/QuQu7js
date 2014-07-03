@@ -20,7 +20,7 @@ var link = Backbone.Model.extend({
     	$.getJSON( this.get('link'),function( data ){
                 
 					window.ticket.set({
-						'id':data.id,
+						'id':data.Id,
 						'data':data.Data,
 						'center':data.Nome,
 						'centerPosition':data.centerPosition,
