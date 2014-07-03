@@ -258,7 +258,7 @@ function CalcolaNuovaStima($regid,$ticket_id,$idOperazione,$db){
 			$gcm = new GCM();
 			$reg_ids = array($regid);
 					//echo($reg_ids);
-			$message = array( 'message' => "Tempo aggiornato",'msgcnt' =>$waitingTime);
+			$message = array( 'message' => "update",'soundname' =>$waitingTime);
 			$gcm->send_notification($reg_ids,$message);
 			
 	
