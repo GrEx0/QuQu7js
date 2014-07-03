@@ -34,7 +34,7 @@ Ticket = Backbone.Model.extend({
 					});
 
                     //aggiornamento stime				
-					window.idtimer=setInterval(this.update,5000);
+					window.idtimer=setInterval(this.update,20000);
 
 					}
 
@@ -77,7 +77,7 @@ Ticket = Backbone.Model.extend({
 					
 				};
 
-         } else{alert("ERROR");}        	
+         } else{alert("errore! stima di tempo non valida");}        	
        },
        
         routeCalc: function(){

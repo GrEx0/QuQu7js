@@ -254,7 +254,7 @@ function CalcolaNuovaStima($regid,$ticket_id,$idOperazione,$db){
 			$waitingTime = ($ServingTime['ServingTime'] * $PeopleWaiting['Totale'])/ $N['NumeroSportelli'];
 			//echo("tempo di attesa:".$waitingTime);
 			$waitingTime = round($waitingTime);
-			echo("nuova stima ".$waitingTime);
+			//echo("nuova stima ".$waitingTime);
 			$gcm = new GCM();
 			$reg_ids = array($regid);
 					//echo($reg_ids);

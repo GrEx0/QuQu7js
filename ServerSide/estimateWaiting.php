@@ -18,7 +18,7 @@
 			$PeopleWaiting = $result->fetch_array(MYSQLI_ASSOC);
 			//echo("Persone davanti:".$PeopleWaiting['Totale']."<br>");
 
-			$query = "SELECT Ticket.id_centro_ext FROM ticket WHERE ticket.id=".$id;
+			$query = "SELECT ticket.id_centro_ext FROM ticket WHERE ticket.id=".$id;
 			$result= $db->query($query);
 			// Id del centro
 			$id_centro = $result->fetch_array(MYSQLI_ASSOC);
@@ -32,7 +32,7 @@
 
 			// Numero di sportelli attivi per quell'operazione
 			$query = "SELECT COUNT(sportelli.Id) as NumeroSportelli
-					  FROM Sportelli
+					  FROM sportelli
 					  WHERE sportelli.Id_Centro_ext =".$id_centro['id_centro_ext']." AND sportelli.Id_operazione_ext=".$id_operazione;
 			$result= $db->query($query);
 			$N = $result->fetch_array(MYSQLI_ASSOC);
