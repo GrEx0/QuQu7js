@@ -1,6 +1,6 @@
 <?php
 
-	if (isset($_GET["id"]) && isset($_GET["id_operazione"]))
+	if (isset($_GET["id"]) && isset($_GET["id_operazione"]))			// verifico i parametri
 	{	
 		$id_operazione = $_GET["id_operazione"];
 		$id = $_GET["id"];
@@ -22,6 +22,7 @@
 			// Seleziono l'id del centro
 			$query = "SELECT ticket.id_centro_ext FROM ticket WHERE ticket.id=".$id;
 			$result= $db->query($query);
+			
 			// Id del centro
 			$id_centro = $result->fetch_array(MYSQLI_ASSOC);
 			
@@ -31,7 +32,6 @@
 		    $result= $db->query($query);
 			// Tempo medio di servizio
 			$ServingTime = $result->fetch_array(MYSQLI_ASSOC);
-			//echo("Tempo medio servizio:".$ServingTime['ServingTime']."<br>");
 
 			// Numero di sportelli attivi per quell'operazione
 			$query = "SELECT COUNT(sportelli.Id) as NumeroSportelli
@@ -39,13 +39,13 @@
 					  WHERE sportelli.Id_Centro_ext =".$id_centro['id_centro_ext']." AND sportelli.Id_operazione_ext=".$id_operazione;
 			$result= $db->query($query);
 			$N = $result->fetch_array(MYSQLI_ASSOC);
-			//echo("Numero Sportelli:".$N['NumeroSportelli']."<br>");
-
+			
+			// Calcolo il tempo di attesa
 			$waitingTime = ($ServingTime['ServingTime'] * $PeopleWaiting['Totale'])/ $N['NumeroSportelli'];
 			//echo("tempo di attesa:".$waitingTime);
             $waitingTime = round($waitingTime);
 			$answer = array('waitingTime'=>$waitingTime);
-			echo(json_encode($answer));
+			echo(json_encode($answer)); 				// ritorno un array in JSON
 		
 		db_disconnect($db);
 

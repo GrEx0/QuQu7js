@@ -22,6 +22,8 @@ function db_disconnect($db){
 	$db->close();
 }
 
+// CheckUser: Verifica che l'id ricevuto sia un ticket effettivamente emesso 
+
 function CheckUser($id,$regid,$db){
 	
 	$query = "SELECT ticket.Id,ticket.Data,ticket.Numero,operazioni.CodiceLettera,operazioni.Id as id_operazione,centri.Nome, CONCAT( centri.Via,'+',citta.Nome) as centerPosition 
@@ -47,6 +49,9 @@ function CheckUser($id,$regid,$db){
 							$gcm->send_notification($reg_ids,$message);
 							return false;
 						} 
+						// Se invece il numero del ticket è diverso ( l'utente sta acquisendo un altro ticket senza aver terminato
+						// il primo ticket)
+						// Cancello il vecchio ticket e metto quello nuovo
 							else {
 								$query = "SELECT * FROM utentiattivi WHERE regid='".$regid."'";
 								$result = $db->query($query);
