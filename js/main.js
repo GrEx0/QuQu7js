@@ -136,7 +136,7 @@ function onNotificationAPN(e) {
             // handle GCM notifications for Android
 function onNotificationGCM(e) {
 				var my_media = new Media("/android_asset/www/beep.wav");
-				var my_update = new Media("/android_asset/www/notification.wav");		
+				var my_update = new Media("/android_asset/www/notifi.wav");		
 
                 switch( e.event )
                 {
@@ -171,6 +171,9 @@ function onNotificationGCM(e) {
         									"waitingTime":"N/D",
         									"walkingTime":"N/D"
 										});
+									clearInterval(window.idtimer);
+                    				window.count = 0;
+                    				window.neveragain = 0;
 									navigator.notification.alert(e.message, function(){},'Notifica');
 									my_media.play();
                     			break;
@@ -178,7 +181,6 @@ function onNotificationGCM(e) {
                     			case "E' il tuo turno!":
                     				clearInterval(window.idtimer);
                     				window.count = 0;
-                    				window.neveragain = 0;
                     				navigator.notification.alert(e.message, function(){},'Notifica');
                     				my_media.play();
                     			break;
