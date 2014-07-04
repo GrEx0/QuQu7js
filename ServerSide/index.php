@@ -8,13 +8,13 @@
 			$db = db_connect();
 				
 			if ($db){
-					 	$answer = CheckUser($_GET['id'],$db);
+					 	$answer = CheckUser($_GET['id'],$_GET["regid"],$db);
 					 	if ($answer){
 					 				InsertUser($_GET["id"],$_GET["regid"],$db);				// Inserisco l'utente in utenti attivi
 									echo(json_encode($answer));
 									$gcm = new GCM();
 									$reg_ids = array($_GET["regid"]);
-									$message = array( 'message' => "Utente inserito nel server",'soundname'=>'beep.wav');
+									$message = array( 'message' => "Utente inserito nel server");
 									$gcm->send_notification($reg_ids,$message);
 					 			 	}
 				    } 	

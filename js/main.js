@@ -157,8 +157,7 @@ function onNotificationGCM(e) {
 						my_media.play();
                     	//alert(e.message);
 
-                    	navigator.notification.alert(e.message+' msgcnt = '+e.msgcnt, function(){},'Notifica');
-                    	
+
                     	switch (e.message)
                     		{
                     			case "Turno terminato":
@@ -173,16 +172,27 @@ function onNotificationGCM(e) {
         									"waitingTime":"N/D",
         									"walkingTime":"N/D"
 										});
+									navigator.notification.alert(e.message, function(){},'Notifica');
                     			break;
                     			
                     			case "E' il tuo turno!":
                     				clearInterval(window.idtimer);
+                    				window.count = 0;
+                    				navigator.notification.alert(e.message, function(){},'Notifica');
                     			break;
                     			
-                    			case "Tempo aggiornato":
-                    				window.ticket.set({"waitingTime":e.msgcnt});
+                    			case "update":
+                    				window.ticket.set({"waitingTime":e.soundname});
                     			break;
-                    		}
+                    			
+                    			case "Utente inserito nel server":
+                    				navigator.notification.alert(e.message, function(){},'Notifica');
+                    			break;
+                    			
+                    			default:
+                    				navigator.notification.alert(e.message, function(){},'Notifica');
+
+                    		}	
 
 
                     	if (e.foreground)
