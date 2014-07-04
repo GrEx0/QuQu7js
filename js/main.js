@@ -135,6 +135,8 @@ function onNotificationAPN(e) {
             
             // handle GCM notifications for Android
 function onNotificationGCM(e) {
+				var my_media = new Media("/android_asset/www/beep.wav");
+				var my_update = new Media("/android_asset/www/notification.wav");		
 
                 switch( e.event )
                 {
@@ -153,8 +155,6 @@ function onNotificationGCM(e) {
                     	// if this flag is set, this notification happened while we were in the foreground.
                     	// you might want to play a sound to get the user's attention, throw up a dialog, etc.
                     	navigator.notification.vibrate(500);
-                    	var my_media = new Media("/android_asset/www/beep.wav");
-						my_media.play();
                     	//alert(e.message);
 
                     	switch (e.message)
@@ -172,24 +172,29 @@ function onNotificationGCM(e) {
         									"walkingTime":"N/D"
 										});
 									navigator.notification.alert(e.message, function(){},'Notifica');
+									my_media.play();
                     			break;
                     			
                     			case "E' il tuo turno!":
                     				clearInterval(window.idtimer);
                     				window.count = 0;
                     				navigator.notification.alert(e.message, function(){},'Notifica');
+                    				my_media.play();
                     			break;
                     			
                     			case "update":
                     				window.ticket.set({"waitingTime":e.soundname});
+                    				my_update.play();
                     			break;
                     			
                     			case "Utente inserito nel server":
                     				navigator.notification.alert(e.message, function(){},'Notifica');
+                    				my_update.play();
                     			break;
                     			
                     			default:
                     				navigator.notification.alert(e.message, function(){},'Notifica');
+                    				my_update.play();
 
                     		}	
 
