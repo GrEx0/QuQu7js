@@ -178,6 +178,7 @@ function onNotificationGCM(e) {
                     			case "E' il tuo turno!":
                     				clearInterval(window.idtimer);
                     				window.count = 0;
+                    				window.neveragain = 0;
                     				navigator.notification.alert(e.message, function(){},'Notifica');
                     				my_media.play();
                     			break;

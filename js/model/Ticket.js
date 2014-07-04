@@ -30,10 +30,14 @@ Ticket = Backbone.Model.extend({
 					linkEstimate = window.url+"estimateWaiting.php?&id="+this.get('id')+"&id_operazione="+this.get('id_operazione_ext');
 					console.log("setto il nuovo link per la stima del tempo"+linkEstimate);
 					$.getJSON(linkEstimate,function( data ){
-							window.ticket.set({waitingTime:data.waitingTime});
+					window.ticket.set({waitingTime:data.waitingTime});
 					});
 
-                    //aggiornamento stime				
+					// calcolo stima percorso 
+					window.ticket.routeCalc();
+					
+                    //aggiornamento stime
+                    				
 					window.idtimer=setInterval(this.update,20000);
 
 					}
