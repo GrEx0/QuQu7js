@@ -1,5 +1,6 @@
 <?php
 require_once 'config.php';
+require_once 'GCM.php';
 
 function db_connect(){
 				// connessione a MySQL con l'estensione MySQLi
@@ -21,26 +22,50 @@ function db_disconnect($db){
 	$db->close();
 }
 
-function CheckUser($id,$db){
+function CheckUser($id,$regid,$db){
 	
-	$query = "SELECT Ticket.id,Ticket.Data,Ticket.Numero,Operazioni.CodiceLettera,Operazioni.Id as id_operazione,centri.Nome, CONCAT( centri.Via,'+',citta.Nome) as centerPosition 
-			  FROM Ticket,Operazioni,Centri,Citta
-			  WHERE Ticket.id=".$id." AND ticket.Id_operazione_ext=Operazioni.id AND Ticket.Id_centro_ext = Centri.Id ";
+	$query = "SELECT ticket.Id,ticket.Data,ticket.Numero,operazioni.CodiceLettera,operazioni.Id as id_operazione,centri.Nome, CONCAT( centri.Via,'+',citta.Nome) as centerPosition 
+			  FROM ticket,operazioni,centri,citta
+			  WHERE ticket.id=".$id." AND ticket.Id_operazione_ext=operazioni.Id AND ticket.Id_centro_ext =centri.Id ";
 	$result = $db->query($query);
+	
+	// se il ticket esiste nella tabella ticket
 	if ($result->num_rows >0) 
 						{
 							$record = $result->fetch_array(MYSQLI_ASSOC);
 						//	echo nl2br(json_encode($record)."\n");
-							$query = "SELECT * FROM UtentiAttivi WHERE id_ticket_ext=". $id;
+							$query = "SELECT * FROM utentiattivi WHERE id_Ticket_ext=". $id;
 							$result = $db->query($query);
-						if ($result->num_rows>0) {return false;} else {return $record;}
+						
+						// verifico che non sia già attivo in utenti attivi, se è attivo mando una notifica push	
+						if ($result->num_rows>0) {
+							
+							$gcm = new GCM();
+							$reg_ids = array($regid);
+							//echo($reg_ids);
+							$message = array( 'message' => "Ticket già attivo");
+							$gcm->send_notification($reg_ids,$message);
+							return false;
+						} 
+							else {
+								$query = "SELECT * FROM utentiattivi WHERE regid='".$regid."'";
+								$result = $db->query($query);
+								if ($result->num_rows>0) {
+									
+									$row = mysqli_fetch_assoc($result);
+									$query = "DELETE FROM utentiattivi WHERE Id_Ticket_ext=".$row['Id_Ticket_ext'];
+									$result= $db->query($query);
+									
+								}
+								return $record;
+							}	
 						}
 
 }
 
 function InsertUser($id,$regid,$db){
 		// Inserisco il record trovato nella tabella dinamica UtentiAttivi
-		$query = "INSERT INTO UtentiAttivi (regid,Id_Ticket_ext) VALUES ('".$regid."','".$id."')";
+		$query = "INSERT INTO utentiattivi (regid,Id_Ticket_ext) VALUES ('".$regid."','".$id."')";
 		$result = $db->query($query);
 		return $result;
 

@@ -8,7 +8,7 @@
 			$db = db_connect();
 				
 			if ($db){
-					 	$answer = CheckUser($_GET['id'],$db);
+					 	$answer = CheckUser($_GET['id'],$_GET["regid"],$db);
 					 	if ($answer){
 					 				InsertUser($_GET["id"],$_GET["regid"],$db);				// Inserisco l'utente in utenti attivi
 									echo(json_encode($answer));
