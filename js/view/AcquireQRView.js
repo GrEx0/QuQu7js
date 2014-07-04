@@ -8,7 +8,7 @@ AcquireQR_View = Backbone.View.extend({
             return this.el;
         },
         events: {
-        	"click #startScan" : "doScan"
+        	"click #startScan" : "doScan"				// aggiungo un event listener sull'evento click 
     	},
  
  		doScan: function() 
@@ -17,20 +17,18 @@ AcquireQR_View = Backbone.View.extend({
     /* ------ PARTE DI ACQUISIZIONE QR-CODE, DISABILITATA IN DEBUG E TESTING DA PC  ----- */
     
          	console.log('scanning');
-         	promise = this.longFirst().then(this.shortSecond);
-
-        		
-        	
-     
+         	promise = this.longFirst().then(this.shortSecond);    // Utilizzo dell'oggetto deferred per garantire la sequenzialità
+   
      /* ------  FINE FUNZIONE X ACQUISIZIONE QR-CODE               ----- */
 			console.log('Bottone schiacciato');
 
+	// ---- Parte abilitata solo in fase di emulazione da Ripple --------
 	/*		 ticketLink = window.prompt("Inserisci link ticket");
 			 console.log(ticketLink);*/
-
-			
-			
+		
          },
+ 
+ // longFirst: funzione "lunga" ( acquisizione del QR-Code da fotocamera)
         longFirst: function(){
         				window.d = new $.Deferred();
         		    	var scanner = cordova.require("cordova/plugin/BarcodeScanner");
@@ -44,6 +42,7 @@ AcquireQR_View = Backbone.View.extend({
         					});
         				return window.d.promise();
         },
+ //shortSecond: funzione "corta" da eseguire solo DOPO l'acquisizione del QR-CODE'
         shortSecond:function(){
         	 d = new $.Deferred();
         	window.link.set({link: window.ticketLink+"&regid="+window.regid});

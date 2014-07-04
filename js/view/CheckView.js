@@ -4,12 +4,7 @@ Check_View = Backbone.View.extend({
             this.template = _.template( tpl.get('Check') );
             window.ticket.bind("change", this.render,this);
             console.log("Check.html template caricato");
-            
-            
-            
-
-   
-            
+       
           },
           
           
@@ -22,12 +17,7 @@ Check_View = Backbone.View.extend({
             
            
         }
-      
-        	
-        	
         
-       
-     
   
     });
 

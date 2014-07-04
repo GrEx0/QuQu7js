@@ -14,15 +14,18 @@
 			$LuckyNumber = $result->fetch_array(MYSQLI_ASSOC);
 			$query = "SELECT COUNT(ticket.id) as Totale FROM ticket WHERE Orafine ='00:00:00' AND ticket.Data='".$LuckyNumber['Data']."' and ticket.Numero<".$LuckyNumber['Numero']." and Id_operazione_ext =".$id_operazione;
 			$result= $db->query($query);
+			
 			// PeopleWaiting = numero di persone davanti all'user
 			$PeopleWaiting = $result->fetch_array(MYSQLI_ASSOC);
-			//echo("Persone davanti:".$PeopleWaiting['Totale']."<br>");
 
+			
+			// Seleziono l'id del centro
 			$query = "SELECT ticket.id_centro_ext FROM ticket WHERE ticket.id=".$id;
 			$result= $db->query($query);
 			// Id del centro
 			$id_centro = $result->fetch_array(MYSQLI_ASSOC);
-
+			
+			// Calcolo il tempo medio di servizio  
 			$query = "SELECT AVG(MINUTE(TIMEDIFF(ticket.OraFine,ticket.OraChiamata))) as ServingTime
  				      FROM ticket WHERE id_operazione_ext =".$id_operazione." and ticket.Id_centro_ext=".$id_centro['id_centro_ext']." AND(ticket.OraChiamata<>'00:00:00')";
 		    $result= $db->query($query);

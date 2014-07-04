@@ -8,16 +8,16 @@ var link = Backbone.Model.extend({
     	//("link rilevato dal modello");
       if (this.get('link'))
 		{
-
-			//alert("sono dentro if");
-			promise = this.ajaxCall().then(this.updatediv);
+			// utilizzo gli oggetti deferred per garantire la sequenzialità delle due operazioni
 			
+			promise = this.ajaxCall().then(this.updatediv); 		// Prima carico i dati nel modello ticket, 
+																	// Poi aggiorno la pagina
 		}
         
     },
     ajaxCall:function(){
     	window.dajax = new $.Deferred();
-    	$.getJSON( this.get('link'),function( data ){
+    	$.getJSON( this.get('link'),function( data ){			 // Ricevo un array JSON, e chiamo la funzione di callback
                 
 					window.ticket.set({
 						'id':data.Id,
@@ -34,6 +34,8 @@ var link = Backbone.Model.extend({
 			return window.dajax.promise();	
     	
     },
+    // Aggiorno il div
+    
     updatediv:function(){
     	 d = new $.Deferred();
     	 $("#answer").html(window.ticket.get('data')+": SUCCESS, Ticket attivato");
