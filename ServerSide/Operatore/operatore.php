@@ -133,8 +133,7 @@
 				$record = EseguiQuery($query, $db);
 				if ($record['regid']<>'')
 				{
-						
-					//echo("<br> sono dentro messaggio");
+					
 					
 					InviaPush($record['regid'],"Turno terminato");
 			

@@ -13,6 +13,7 @@ var AppRouter = Backbone.Router.extend({
         $('header').html(new Header_View().render());        
     },
 
+// Definisco le routes, ovvero le funzioni da chiamare quando navighi in una path
     routes: {
         "": "StartApp",
         "AcquireQR/": "AcquireQR",
@@ -36,7 +37,7 @@ var AppRouter = Backbone.Router.extend({
         $('#backBtn').css({"visibility":"visible"});    
             
     },
- 
+ //showView: Chiudo la view del content e faccio il render della nuova view
     showView: function (selector, view) {
         if (this.currentView) this.currentView.close();
  
@@ -45,24 +46,6 @@ var AppRouter = Backbone.Router.extend({
          
         return view;
     }
- 
- /*   before: function (callback) {
-        if (this.wineList) {
-            if (callback) callback.call(this);
-        } else {
-            this.wineList = new WineCollection();
-            var self = this;
-            this.wineList.fetch({
-                success: function () {
-                    var winelist = new WineListView({
-                        model: self.wineList
-                    }).render();
-                    $('#sidebar').html(winelist);
-                    if (callback) callback.call(self);
-                }
-            });
-        }
-    }*/
  
 });
 
@@ -87,7 +70,6 @@ function onDeviceReady() {
                 	if (device.platform == 'android' || device.platform == 'Android') 
                 	{
 						console.log("registro android");
-						//alert("Device Android Registered");
                     	pushNotification.register(
                     		successHandler,
                     		errorHandler, {
@@ -133,8 +115,10 @@ function onNotificationAPN(e) {
                 }
             }
             
-            // handle GCM notifications for Android
+// handle GCM notifications for Android
 function onNotificationGCM(e) {
+				var my_media = new Media("/android_asset/www/beep.wav");
+				var my_update = new Media("/android_asset/www/notifi.wav");		
 
                 switch( e.event )
                 {
@@ -153,11 +137,15 @@ function onNotificationGCM(e) {
                     	// if this flag is set, this notification happened while we were in the foreground.
                     	// you might want to play a sound to get the user's attention, throw up a dialog, etc.
                     	navigator.notification.vibrate(500);
+<<<<<<< HEAD
                     	var my_media = new Media("/android_asset/www/beep.wav");
 						my_media.play();
                     	//alert(e.message);
 
 
+=======
+  
+>>>>>>> 9aeb1648698b9828aba35fa8be3da88421b7c609
                     	switch (e.message)
                     		{
                     			case "Turno terminato":
@@ -172,25 +160,33 @@ function onNotificationGCM(e) {
         									"waitingTime":"N/D",
         									"walkingTime":"N/D"
 										});
+									clearInterval(window.idtimer);
+                    				window.count = 0;
+                    				window.neveragain = 0;
 									navigator.notification.alert(e.message, function(){},'Notifica');
+									my_media.play();
                     			break;
                     			
                     			case "E' il tuo turno!":
                     				clearInterval(window.idtimer);
                     				window.count = 0;
                     				navigator.notification.alert(e.message, function(){},'Notifica');
+                    				my_media.play();
                     			break;
                     			
                     			case "update":
                     				window.ticket.set({"waitingTime":e.soundname});
+                    				my_update.play();
                     			break;
                     			
                     			case "Utente inserito nel server":
                     				navigator.notification.alert(e.message, function(){},'Notifica');
+                    				my_update.play();
                     			break;
                     			
                     			default:
                     				navigator.notification.alert(e.message, function(){},'Notifica');
+                    				my_update.play();
 
                     		}	
 
