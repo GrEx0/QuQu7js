@@ -12,14 +12,13 @@ Ticket = Backbone.Model.extend({
     },
 	 initialize: function(){
       this.bind("change", this.attributesChanged);
-      
-      	
-		 	
-		 	window.neveragain=0;
-		 	window.count=0;
-      
-      
+     
+      //variabili globali per il  notification.confirm
+      window.neveragain=0;
+	  window.count=0;
+     
     },
+    
 	 attributesChanged: function()
 		{
 				console.log(this.toJSON());
@@ -57,7 +56,8 @@ Ticket = Backbone.Model.extend({
 				if(parseInt(window.ticket.get('waitingTime'))<=2+parseInt(window.ticket.get('walkingTime'))){
 					
 					
-					if(window.neveragain==0 & window.count%2==0){       //notifica ogni 2 minuti
+					if(window.neveragain==0 & window.count%2==0){    //notifica ogni 2 minuti oppure mai
+					
 					navigator.notification.confirm(
 						  "tra circa "+window.ticket.get('waitingTime')+
 					      " minuti è il tuo tuno.\nLa tua distanza dal centro è circa "+window.ticket.get('walkingTime')+
@@ -83,22 +83,15 @@ Ticket = Backbone.Model.extend({
         routeCalc: function(){
   
           	 	//stima percorso
-          	 	
-          	 	
-
              navigator.geolocation.getCurrentPosition(
-             	
              	
  
             function(position) {
             	
-            	//alert(position.coords.latitude + ',' + position.coords.longitude);
 
 	var mapurl="https://maps.googleapis.com/maps/api/directions/json?origin="+position.coords.latitude+","+position.coords.longitude
 	+"&destination="+window.ticket.get('centerPosition')
     +"&mode=walking&sensor=true&key=AIzaSyC1U94HTYNNSUpJHot6_bBRIT-C0aGVE-Q";
-    
-    //alert(mapurl);
     
     
         	$.getJSON(mapurl

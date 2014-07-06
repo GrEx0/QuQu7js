@@ -5,15 +5,10 @@ Check_View = Backbone.View.extend({
             window.ticket.bind("change", this.render,this);
             console.log("Check.html template caricato");
             
-            
-            
-
-   
-            
+          
           },
           
-          
-        
+      
         render: function(){
             this.$el.html( this.template(this.model.toJSON()) );
             console.log("Rendering Check_view");
@@ -21,14 +16,9 @@ Check_View = Backbone.View.extend({
             return this.el;
             
            
-        }
+          }
       
-        	
-        	
-        
-       
-     
-  
+ 
     });
 
 
