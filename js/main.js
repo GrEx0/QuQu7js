@@ -149,7 +149,8 @@ function onNotificationGCM(e) {
         									"operation":"",
         									"id_operazione_ext":"",
         									"waitingTime":"N/D",
-        									"walkingTime":"N/D"
+        									"walkingTime":"N/D",
+        									"N":0
 										});
 									clearInterval(window.idtimer);
                     				window.count = 0;
@@ -164,7 +165,10 @@ function onNotificationGCM(e) {
                     			break;
                     			
                     			case "update":
-                    				window.ticket.set({"waitingTime":e.soundname});
+                    				window.ticket.set({
+                    					"waitingTime":e.soundname.waitingTime,
+                    					"N":e.soundname.N
+                    					});
                     			break;
                     			
                     			case "Utente inserito nel server":
