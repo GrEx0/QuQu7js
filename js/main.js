@@ -166,8 +166,8 @@ function onNotificationGCM(e) {
                     			
                     			case "update":
                     				window.ticket.set({
-                    					"waitingTime":e.soundname.waitingTime,
-                    					"N":e.soundname.N
+                    					"waitingTime":e.soundname,
+                    					"N":e.N
                     					});
                     			break;
                     			
