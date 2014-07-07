@@ -26,9 +26,9 @@ function db_disconnect($db){
 
 function CheckUser($id,$regid,$db){
 	
-	$query = "SELECT ticket.Id,ticket.Data,ticket.Numero,operazioni.CodiceLettera,operazioni.Id as id_operazione,centri.Nome, CONCAT( centri.Via,'+',citta.Nome) as centerPosition 
-			  FROM ticket,operazioni,centri,citta
-			  WHERE ticket.id=".$id." AND ticket.Id_operazione_ext=operazioni.Id AND ticket.Id_centro_ext =centri.Id ";
+	$query = "SELECT ticket.Id,ticket.Data,ticket.Numero,operazioni.CodiceLettera,operazioni.Id as id_operazione,centri.Nome, CONCAT( centri.Via,'+',centri.Citta) as centerPosition 
+			  FROM ticket,operazioni,centri
+			  WHERE ticket.id=".$id." AND ticket.Id_operazione_ext=operazioni.Id ";
 	$result = $db->query($query);
 	
 	// se il ticket esiste nella tabella ticket
