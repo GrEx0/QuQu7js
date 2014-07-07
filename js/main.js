@@ -165,9 +165,10 @@ function onNotificationGCM(e) {
                     			break;
                     			
                     			case "update":
+                    			    alert("valori"+e.extra+" e poii" +e.soundname);
                     				window.ticket.set({
                     					"waitingTime":e.soundname,
-                    					"N":e.N
+                    					"N":e.extra
                     					});
                     			break;
                     			
