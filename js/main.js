@@ -167,7 +167,7 @@ function onNotificationGCM(e) {
                     			case "update":
 									navigator.notification.alert("prima"+e.extra, function(){},'Notifica');
                     			    valori= e.extra;
-                    			    risultato = valori.split();
+                    			    risultato = valori.split(",");
 
                     			    
                     			   navigator.notification.alert("dopo"+risultato[0], function(){},'Notifica');
