@@ -155,8 +155,6 @@ function onNotificationGCM(e) {
 									clearInterval(window.idtimer);
                     				window.count = 0;
                     				window.neveragain = 0;
-									navigator.notification.alert(e.message, function(){},'Notifica');
-									my_media.play();
                     			break;
                     			
                     			case "E' il tuo turno!":
@@ -168,12 +166,10 @@ function onNotificationGCM(e) {
                     			
                     			case "update":
                     				window.ticket.set({"waitingTime":e.soundname});
-                    				my_update.play();
                     			break;
                     			
                     			case "Utente inserito nel server":
                     				navigator.notification.alert(e.message, function(){},'Notifica');
-                    				my_update.play();
                     			break;
                     			
                     			default:
