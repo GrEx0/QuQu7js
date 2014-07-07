@@ -168,8 +168,6 @@ function onNotificationGCM(e) {
                     			    valori= e.soundname;
                     			    risultato = valori.split(",");
 
-                    			    
-                    			   navigator.notification.alert("dopo"+risultato[0], function(){},'Notifica');
                     				window.ticket.set({
                     					"waitingTime":risultato[1],
                     					"N":risultato[0]
