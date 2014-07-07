@@ -137,7 +137,15 @@ function onNotificationGCM(e) {
                     	// if this flag is set, this notification happened while we were in the foreground.
                     	// you might want to play a sound to get the user's attention, throw up a dialog, etc.
                     	navigator.notification.vibrate(500);
+<<<<<<< HEAD
+                    	var my_media = new Media("/android_asset/www/beep.wav");
+						my_media.play();
+                    	//alert(e.message);
+
+
+=======
   
+>>>>>>> 9aeb1648698b9828aba35fa8be3da88421b7c609
                     	switch (e.message)
                     		{
                     			case "Turno terminato":

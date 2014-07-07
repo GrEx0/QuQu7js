@@ -11,8 +11,9 @@ $(document).ready(function(){
 		
 	});
 	
+	//cambia operazione
 	$('#combobox').change(function() {
-   // assign the value to a variable, so you can test to see if it is working
+   
     	var selectVal = $('#combobox :selected').val();
     	$.get("operatore.php?&operation=changeOperazione&NuovaOperazione="+selectVal,function(data){
     		if (data == 'SUCCESS')
