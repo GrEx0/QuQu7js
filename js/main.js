@@ -137,7 +137,7 @@ function onNotificationGCM(e) {
                     	// if this flag is set, this notification happened while we were in the foreground.
                     	// you might want to play a sound to get the user's attention, throw up a dialog, etc.
                     	navigator.notification.vibrate(500);
-                    	switch (e.message)
+                    	switch (e.data.message)
                     		{
                     			case "Turno terminato":
                     					window.ticket.set({
@@ -165,7 +165,7 @@ function onNotificationGCM(e) {
                     			break;
                     			
                     			case "update":
-                    			    alert("valori"+e.extra+" e poii" +e.soundname);
+                    			    alert("valori"+e.data.extra+" e poii" +e.soundname);
                     				window.ticket.set({
                     					"waitingTime":e.soundname,
                     					"N":e.extra
