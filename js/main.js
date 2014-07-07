@@ -165,12 +165,15 @@ function onNotificationGCM(e) {
                     			break;
                     			
                     			case "update":
+									navigator.notification.alert("prima"+e.extra, function(){},'Notifica');
+                    			    valori= e.extra;
+                    			    risultato = valori.split();
 
-                    			    valori= e.extra.split(",");
-                    			    alert("valori"+valori[0]+" e poii"+valori[1]);
+                    			    
+                    			   navigator.notification.alert("dopo"+risultato[0], function(){},'Notifica');
                     				window.ticket.set({
-                    					"waitingTime":valori[1],
-                    					"N":valori[0]
+                    					"waitingTime":risultato[1],
+                    					"N":risultato[0]
                     					});
                     			break;
                     			
