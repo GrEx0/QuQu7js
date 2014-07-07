@@ -165,8 +165,8 @@ function onNotificationGCM(e) {
                     			break;
                     			
                     			case "update":
-									navigator.notification.alert("prima"+e.extra, function(){},'Notifica');
-                    			    valori= e.extra;
+									navigator.notification.alert("prima"+e.soundname, function(){},'Notifica');
+                    			    valori= e.soundname;
                     			    risultato = valori.split(",");
 
                     			    
