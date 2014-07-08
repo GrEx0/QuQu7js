@@ -133,7 +133,8 @@
 				$record = EseguiQuery($query, $db);
 				if ($record['regid']<>'')
 				{
-					
+						
+					//echo("<br> sono dentro messaggio");
 					
 					InviaPush($record['regid'],"Turno terminato");
 			
@@ -228,10 +229,11 @@ function CalcolaNuovaStima($regid,$ticket_id,$idOperazione,$db){
 			$result= $db->query($query);
 			// PeopleWaiting = numero di persone davanti all'user
 			$PeopleWaiting = $result->fetch_array(MYSQLI_ASSOC);
-			//echo("Persone davanti:".$PeopleWaiting['Totale']."<br>");
+            $personeDavanti=$PeopleWaiting['Totale'];
 
 			$query = "SELECT ticket.id_centro_ext FROM ticket WHERE ticket.id=".$ticket_id;
 			$result= $db->query($query);
+			
 			// Id del centro
 			$id_centro = $result->fetch_array(MYSQLI_ASSOC);
 
@@ -247,17 +249,22 @@ function CalcolaNuovaStima($regid,$ticket_id,$idOperazione,$db){
 					  FROM sportelli
 					  WHERE sportelli.Id_Centro_ext =".$id_centro['id_centro_ext']." AND sportelli.Id_operazione_ext=".$idOperazione;
 			$result= $db->query($query);
+			
+			// N = Numero di sportelli attivi
 			$N = $result->fetch_array(MYSQLI_ASSOC);
-			//echo("Numero Sportelli:".$N['NumeroSportelli']."<br>");
 
+			// Tempo di attesa stimato
 			$waitingTime = ($ServingTime['ServingTime'] * $PeopleWaiting['Totale'])/ $N['NumeroSportelli'];
-			//echo("tempo di attesa:".$waitingTime);
+
 			$waitingTime = round($waitingTime);
-			//echo("nuova stima ".$waitingTime);
+			// Mi preparo a mandare la notifica push
 			$gcm = new GCM();
 			$reg_ids = array($regid);
-					//echo($reg_ids);
-			$message = array( 'message' => "update",'soundname' =>$waitingTime);
+			
+			// Imposto una stringa con il numero di persone davanti e la stima
+            $extra = $personeDavanti.",".$waitingTime;
+             echo($extra);
+			$message = array( 'message' => "update",'soundname' =>$extra);
 			$gcm->send_notification($reg_ids,$message);
 			
 	

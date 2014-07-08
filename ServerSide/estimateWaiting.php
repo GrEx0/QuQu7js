@@ -17,7 +17,7 @@
 			
 			// PeopleWaiting = numero di persone davanti all'user
 			$PeopleWaiting = $result->fetch_array(MYSQLI_ASSOC);
-
+			$personeDavanti = $PeopleWaiting['Totale'];
 			
 			// Seleziono l'id del centro
 			$query = "SELECT ticket.id_centro_ext FROM ticket WHERE ticket.id=".$id;
@@ -44,8 +44,10 @@
 			$waitingTime = ($ServingTime['ServingTime'] * $PeopleWaiting['Totale'])/ $N['NumeroSportelli'];
 			//echo("tempo di attesa:".$waitingTime);
             $waitingTime = round($waitingTime);
-			$answer = array('waitingTime'=>$waitingTime);
-			echo(json_encode($answer)); 				// ritorno un array in JSON
+			$answer = array('waitingTime'=>$waitingTime, 'N'=>$personeDavanti);
+            
+            // ritorno un array in JSON contenente il numero di persone davanti e la stima del tempo iniziale
+			echo(json_encode($answer)); 				
 		
 		db_disconnect($db);
 
