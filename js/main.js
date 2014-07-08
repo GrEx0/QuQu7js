@@ -155,6 +155,7 @@ function onNotificationGCM(e) {
 									clearInterval(window.idtimer);
                     				window.count = 0;
                     				window.neveragain = 0;
+                    				navigator.notification.alert(e.message, function(){},'Notifica');
                     			break;
                     			
                     			case "E' il tuo turno!":
