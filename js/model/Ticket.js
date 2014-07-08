@@ -12,6 +12,7 @@ Ticket = Backbone.Model.extend({
         "N":0
     },
 	 initialize: function(){
+	 // binding dell'evento con l'event handler
       this.bind("change", this.attributesChanged);
      
       //variabili globali per il  notification.confirm
@@ -19,7 +20,7 @@ Ticket = Backbone.Model.extend({
 	  window.count=0;
      
     },
-    
+    // Funzione che viene chiamata ogni volta che un attributo del  modello viene cambiato
 	 attributesChanged: function()
 		{
 				console.log(this.toJSON());
@@ -29,6 +30,8 @@ Ticket = Backbone.Model.extend({
 					//stima attesa
 					linkEstimate = window.url+"estimateWaiting.php?&id="+this.get('id')+"&id_operazione="+this.get('id_operazione_ext');
 					console.log("setto il nuovo link per la stima del tempo"+linkEstimate);
+					
+				// Dato che estimateWaiting restituisce un array JSON sfrutto il metodo jQuery 
 					$.getJSON(linkEstimate,function( data ){
 					window.ticket.set({
 						waitingTime:data.waitingTime,
