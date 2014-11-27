@@ -45,7 +45,7 @@ Ticket = Backbone.Model.extend({
 					
                     //aggiornamento stime
                     				
-					window.idtimer=setInterval(this.update,20000);
+					window.idtimer=setInterval(this.update,60000);
 
 					}
 
